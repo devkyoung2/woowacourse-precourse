@@ -11,7 +11,16 @@ class App {
     this.#user = new User();
     this.#menu = new Menu();
   }
-  async run() {}
+
+  async run() {
+    OutputView.printWecome();
+    this.inputDate();
+  }
+
+  async inputDate() {
+    const date = await InputView.readDate();
+    this.#user.setOrder(date);
+  }
 }
 
 export default App;
