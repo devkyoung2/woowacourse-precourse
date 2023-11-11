@@ -14,12 +14,18 @@ class App {
 
   async run() {
     OutputView.printWecome();
-    this.inputDate();
+    await this.inputDate();
+    await this.inputOrder();
   }
 
   async inputDate() {
     const date = await InputView.readDate();
-    this.#user.setOrder(date);
+    // this.#user.setOrder(date);
+  }
+
+  async inputOrder() {
+    const order = await InputView.readOrder();
+    // this.#user.inputOrder();
   }
 }
 
