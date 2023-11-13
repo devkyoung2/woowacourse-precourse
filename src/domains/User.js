@@ -13,6 +13,7 @@ export default class User {
   // 함수명 수정
   setOrderMenu(order) {
     this.#validationOrder(order);
+
     // orderMenu 이상 없을 시, 주문 인스턴스 생성
     // 생성된 객체 내부에서 주문 유효성 검증
   }
@@ -33,7 +34,8 @@ export default class User {
     const parsedOrder = parsingOrder(order);
     isDuplicatedOrder(parsedOrder);
     hasOrderInMenu(parsedOrder);
-    // 메뉴의 개수는 1이상의 숫자
+    isValidatedItemsCount(parsedOrder);
+    return parsedOrder;
   }
 }
 
@@ -69,5 +71,17 @@ function hasOrderInMenu(parsedOrder) {
   parsedOrder.forEach((item) => {
     if (!Menu.hasItemInMenu(item.name))
       throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+  });
+}
+
+function isValidatedItemsCount(parsedOrder) {
+  parsedOrder.forEach((item) => {
+    if (parseInt(item.count) !== Number(item.count)) {
+      throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+    }
+
+    if (parseInt(item.count) < 1) {
+      throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+    }
   });
 }
