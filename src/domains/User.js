@@ -1,4 +1,5 @@
 import { isNatural } from '../utils/validate.js';
+import Menu from './Menu.js';
 
 export default class User {
   #date;
@@ -32,14 +33,8 @@ export default class User {
     const parsedOrder = parsingOrder(order);
     isDuplicatedOrder(parsedOrder);
     hasOrderInMenu(parsedOrder);
-    // 메뉴판에 없는 메뉴가 입력되면 안됨
     // 메뉴의 개수는 1이상의 숫자
   }
-}
-
-function hasOrderInMenu(parsedOrder) {
-  parsedOrder.some((item) => console.log(item));
-  // console.log(parsedOrder);
 }
 
 function parsingOrder(orders) {
@@ -67,5 +62,12 @@ function isDuplicatedOrder(orderArr) {
     }
 
     orderName.push(item.name);
+  });
+}
+
+function hasOrderInMenu(parsedOrder) {
+  parsedOrder.forEach((item) => {
+    if (!Menu.hasItemInMenu(item.name))
+      throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
   });
 }
