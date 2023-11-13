@@ -4,6 +4,7 @@ import OutputView from './views/OutputView.js';
 class App {
   async run() {
     OutputView.printWecome();
+
     await this.inputDate();
   }
 
@@ -12,8 +13,8 @@ class App {
       const date = await InputView.readDate();
       console.log(date);
     } catch (error) {
-      // 추후 상수화
-      Console.print(error.message);
+      OutputView.printError(error.message);
+
       return this.inputDate();
     }
   }
