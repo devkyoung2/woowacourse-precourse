@@ -12,7 +12,7 @@ class App {
   async run() {
     OutputView.printWecome();
     await this.inputDate();
-    await this.inputOrder();
+    await this.inputOrderMenu();
   }
 
   async inputDate() {
@@ -26,14 +26,14 @@ class App {
     }
   }
 
-  async inputOrder() {
+  async inputOrderMenu() {
     try {
-      const order = await InputView.readOrder();
-      console.log(order);
+      const orderMenu = await InputView.readOrderMenu();
+      this.#user.setOrderMenu(orderMenu);
     } catch (error) {
       OutputView.printError(error.message);
 
-      return this.inputOrder();
+      return this.inputOrderMenu();
     }
   }
 }
