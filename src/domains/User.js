@@ -1,9 +1,10 @@
 import { isNatural } from '../utils/validate.js';
+import Order from './Order.js';
 import Menu from './Menu.js';
 
 export default class User {
   #date;
-  #orderItem;
+  #order;
 
   setDate(date) {
     this.#validationDate(date);
@@ -12,8 +13,8 @@ export default class User {
 
   // 함수명 수정
   setOrderMenu(order) {
-    this.#validationOrder(order);
-
+    const validatedOrder = this.#validationOrder(order);
+    this.#order = new Order(validatedOrder);
     // orderMenu 이상 없을 시, 주문 인스턴스 생성
     // 생성된 객체 내부에서 주문 유효성 검증
   }
