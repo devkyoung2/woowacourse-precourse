@@ -52,21 +52,20 @@ function parsingOrder(orders) {
       throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
     }
     const [item, count] = parsedOrder;
-    parsedOrders.push({ [item]: count });
+    parsedOrders.push({ name: item, count });
   }
 
   return parsedOrders;
 }
 
 function isDuplicatedOrder(orderArr) {
-  const orderObj = {};
+  const orderName = [];
 
-  orderArr.forEach((order) => {
-    const [key, value] = Object.entries(order)[0];
-    orderObj[key] = Number(value);
+  orderArr.forEach((item) => {
+    if (orderName.includes(item.name)) {
+      throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+    }
+
+    orderName.push(item.name);
   });
-
-  if (orderArr.length !== Object.keys(orderObj).length) {
-    throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
-  }
 }
