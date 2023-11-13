@@ -17,7 +17,7 @@ const InputView = {
       '\n주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)\n'
     );
 
-    // validationOrder(input);
+    validationOrder(input);
 
     return input;
   },
@@ -37,4 +37,13 @@ function validationDate(date) {
   }
 }
 
+function validationOrder(order) {
+  if (isEmpty(order)) {
+    throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.\n');
+  }
+
+  if (!isTrimed(order)) {
+    throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.\n');
+  }
+}
 export default InputView;
