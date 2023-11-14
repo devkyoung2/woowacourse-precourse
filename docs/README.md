@@ -30,7 +30,7 @@
   - [x] 음료만 주문할 수 없다.
   - [x] 메뉴는 20개까지 주문할 수 있다.
 
-- [] 12월 이벤트 구현
+- [x] 12월 이벤트 구현
 
   - [x] 크리스마스 디데이 할인
     - [x] 이벤트 기간 : 2023.12.1 ~ 2023.12.25
@@ -48,8 +48,8 @@
   - [x] 증정 이벤트
     - [x] 이벤트 기간 : 2023.12.1 ~ 2023.12.31
     - [x] 할인 전 총주문 금액이 12만 원 이상일 때, 샴페인 1개 증정한다.
-  - [] 혜택 금액에 따라 이벤트 뱃지 부여
-    - [] 총혜택 금액이 5천원 이상일시 별, 1만원 이상일시 트리, 2만원 이상일시 산타 배지 부여한다.
+  - [x] 혜택 금액에 따라 이벤트 뱃지 부여
+    - [x] 총혜택 금액이 5천원 이상일시 별, 1만원 이상일시 트리, 2만원 이상일시 산타 배지 부여한다.
 
 - [x] 주문 메뉴 안내 getOrderMenu()
 - [x] 할인 전 총 주문 금액 안내 getPaymentBeforeDiscount()
@@ -58,38 +58,38 @@
 - [x] 혜택 내역 안내 PromotionDetail
   - [x] 고객에게 적용된 이벤트 내역만 보여준다.
   - [x] 적용된 이벤트가 하나도 없다면 혜택 내역 "없음"으로 보여준다.
-- [] 총 혜택 금액 안내 TotalPromotionAmount
-- [] 할인 후 예상 결제 금액 안내 PaymentAfterDiscount
-- [] 12월 이벤트 배지 안내 EventBadge
-  - [] 이벤트 배지가 부여되지 않는 경우, "없음"으로 보여준다.
+- [x] 총 혜택 금액 안내 TotalPromotionAmount
+- [x] 할인 후 예상 결제 금액 안내 PaymentAfterDiscount
+- [x] 12월 이벤트 배지 안내 EventBadge
+  - [x] 이벤트 배지가 부여되지 않는 경우, "없음"으로 보여준다.
 
 <br />
 
 ## 🫥 프로그래밍 요구사항
 
-- [] Node.js 18.17.1 버전에서 실행 가능해야 한다. **Node.js 18.17.1에서 정상적으로 동작하지 않을 경우 0점 처리한다.**
-- [] 프로그램 실행의 시작점은 `App.js`의 `run` 메서드이다. 아래와 같이 프로그램을 실행시킬 수 있어야 한다.
-- [] `package.json`을 변경할 수 없고 외부 라이브러리(jQuery, Lodash 등)를 사용하지 않는다. 순수 Vanilla JS로만 구현한다.
-- [] [JavaScript 코드 컨벤션](https://github.com/woowacourse/woowacourse-docs/tree/main/styleguide/javascript)을 지키면서 프로그래밍 한다
-- [] 프로그램 종료 시 `process.exit()`를 호출하지 않는다.
+- [x] Node.js 18.17.1 버전에서 실행 가능해야 한다. **Node.js 18.17.1에서 정상적으로 동작하지 않을 경우 0점 처리한다.**
+- [x] 프로그램 실행의 시작점은 `App.js`의 `run` 메서드이다. 아래와 같이 프로그램을 실행시킬 수 있어야 한다.
+- [x] `package.json`을 변경할 수 없고 외부 라이브러리(jQuery, Lodash 등)를 사용하지 않는다. 순수 Vanilla JS로만 구현한다.
+- [x] [JavaScript 코드 컨벤션](https://github.com/woowacourse/woowacourse-docs/tree/main/styleguide/javascript)을 지키면서 프로그래밍 한다
+- [x] 프로그램 종료 시 `process.exit()`를 호출하지 않는다.
 - [] 프로그램 구현이 완료되면 `ApplicationTest`의 모든 테스트가 성공해야 한다. **테스트가 실패할 경우 0점 처리한다.**
-- [] 프로그래밍 요구 사항에서 달리 명시하지 않는 한 파일, 패키지 이름을 수정하거나 이동하지 않는다.
+- [x] 프로그래밍 요구 사항에서 달리 명시하지 않는 한 파일, 패키지 이름을 수정하거나 이동하지 않는다.
 - [] indent(인덴트, 들여쓰기) depth를 3이 넘지 않도록 구현한다. 2까지만 허용한다.
 - [] Jest를 이용하여 본인이 정리한 기능 목록이 정상 동작함을 테스트 코드로 확인한다.
 - [] 함수(또는 메서드)의 길이가 15라인을 넘어가지 않도록 구현한다.
-- [] else를 지양한다.
+- [x] else를 지양한다.
 - [] 도메인 로직에 단위 테스트를 구현해야 한다. 단, UI(Console.readLineAsync, Console.print) 로직에 대한 단위 테스트는 제외한다.
 - [] 사용자가 잘못된 값을 입력할 경우 `throw`문을 사용해 예외를 발생시킨다. 그런 다음, "[ERROR]"로 시작하는 에러 메시지를 출력하고 해당 부분부터 입력을 다시 받는다.
-- [] 제공되는 `InputView`, `OutputView` 객체를 활용해 구현한다.
-- `@woowacourse/mission-utils`에서 제공하는 `Console` API를 사용하여 구현해야 한다.
-- 사용자의 값을 입력 받고 출력하기 위해서는 `Console.readLineAsync`, `Console.print`를 활용한다.
+- [x] 제공되는 `InputView`, `OutputView` 객체를 활용해 구현한다.
+- [x] `@woowacourse/mission-utils`에서 제공하는 `Console` API를 사용하여 구현해야 한다.
+- [x] 사용자의 값을 입력 받고 출력하기 위해서는 `Console.readLineAsync`, `Console.print`를 활용한다.
 
 <br />
 
 ## ✏️ 과제 진행 요구 사항
 
-- [] 미션은 [javascript-christmas-6](https://github.com/woowacourse-precourse/javascript-christmas-6) 저장소를 비공개 저장소로 생성해 시작한다.
-- [] **기능을 구현하기 전 `docs/README.md`에 구현할 기능 목록을 정리**해 추가한다.
-- [] **Git의 커밋 단위는 앞 단계에서 `docs/README.md`에 정리한 기능 목록 단위**로 추가한다.
-  - [] [커밋 메시지 컨벤션](https://gist.github.com/stephenparish/9941e89d80e2bc58a153) 가이드를 참고해 커밋 메시지를 작성한다.
-- [] 과제 진행 및 제출 방법은 [프리코스 과제 제출](https://docs.google.com/document/d/1cmg0VpPkuvdaetxwp4hnyyFC_G-1f2Gr8nIDYIWcKC8/edit?usp=sharing) 문서를 참고한다.
+- [x] 미션은 [javascript-christmas-6](https://github.com/woowacourse-precourse/javascript-christmas-6) 저장소를 비공개 저장소로 생성해 시작한다.
+- [x] **기능을 구현하기 전 `docs/README.md`에 구현할 기능 목록을 정리**해 추가한다.
+- [x] **Git의 커밋 단위는 앞 단계에서 `docs/README.md`에 정리한 기능 목록 단위**로 추가한다.
+  - [x] [커밋 메시지 컨벤션](https://gist.github.com/stephenparish/9941e89d80e2bc58a153) 가이드를 참고해 커밋 메시지를 작성한다.
+- [x] 과제 진행 및 제출 방법은 [프리코스 과제 제출](https://docs.google.com/document/d/1cmg0VpPkuvdaetxwp4hnyyFC_G-1f2Gr8nIDYIWcKC8/edit?usp=sharing) 문서를 참고한다.
