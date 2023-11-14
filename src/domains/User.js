@@ -69,8 +69,8 @@ export default class User {
   }
 
   // 할인 후 예상 결제 금액
-  paymentBeforeDiscount() {
-    return this.#order.getPaymentBeforeDiscount();
+  paymentAfterDiscount() {
+    return this.#order.getPaymentAfterDiscount();
   }
   // 12월 이벤트 배지
 }

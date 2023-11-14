@@ -52,15 +52,19 @@ class Order {
     return applyPromotionDetail;
   }
 
+  // 총 혜택 금액
   getTotalPromotionAmount() {
-    const a = this.#totalPromotion.reduce((acc, cur) => {
+    const totalPromotionAmount = this.#totalPromotion.reduce((acc, cur) => {
       return acc + cur.discount;
     }, 0);
 
-    return a;
+    return totalPromotionAmount;
   }
 
-  getPaymentBeforeDiscount() {}
+  // 할인 후 예상 결제 금액
+  getPaymentAfterDiscount() {
+    return this.#totalPayment - this.getTotalPromotionAmount();
+  }
 }
 
 export default Order;
