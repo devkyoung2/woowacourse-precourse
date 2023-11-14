@@ -7,10 +7,10 @@ class App {
 
   async run() {
     OutputView.printWecome();
+    this.#user = new User();
 
-    const date = await this.inputDate();
-    const order = await this.inputOrderMenu();
-    this.#user = new User(date, order);
+    await this.inputDate();
+    await this.inputOrderMenu();
 
     this.printEventPlanner(this.#user);
   }
@@ -18,8 +18,7 @@ class App {
   async inputDate() {
     try {
       const date = await InputView.readDate();
-
-      return date;
+      this.#user.setDate(date);
     } catch (error) {
       OutputView.printError(error.message);
 
@@ -30,8 +29,7 @@ class App {
   async inputOrderMenu() {
     try {
       const orderMenu = await InputView.readOrderMenu();
-
-      return orderMenu;
+      this.#user.setOrderMenu(orderMenu);
     } catch (error) {
       OutputView.printError(error.message);
 

@@ -8,9 +8,11 @@ class Order {
   #totalPayment = [];
   #totalPromotion = [];
 
-  constructor(date, order) {
-    this.#order = order;
+  setDate(date) {
     this.#date = date;
+  }
+  setOrder(order) {
+    this.#order = order;
     this.#totalPayment = this.caculateOrder();
     this.#applyPromotion = Promotion.isApply(this.#totalPayment);
   }

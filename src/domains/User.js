@@ -7,10 +7,17 @@ const MAX_ORDER_COUNT = 20;
 export default class User {
   #order;
 
-  constructor(date, order) {
+  constructor() {
+    this.#order = new Order();
+  }
+
+  setDate(date) {
     const validateDate = this.#validationDate(date);
+    this.#order.setDate(validateDate);
+  }
+  setOrderMenu(order) {
     const validateOrder = this.#validationOrder(order);
-    this.#order = new Order(validateDate, validateOrder);
+    this.#order.setOrder(validateOrder);
   }
 
   #validationDate(date) {
