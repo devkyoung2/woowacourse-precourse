@@ -65,6 +65,13 @@ class Order {
   getPaymentAfterDiscount() {
     return this.#totalPayment - this.getTotalPromotionAmount();
   }
+
+  getEventBadge() {
+    if (!this.#applyPromotion) return false;
+
+    const badge = Promotion.EventBadge();
+    return badge;
+  }
 }
 
 export default Order;

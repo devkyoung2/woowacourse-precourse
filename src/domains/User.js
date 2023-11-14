@@ -73,6 +73,9 @@ export default class User {
     return this.#order.getPaymentAfterDiscount();
   }
   // 12월 이벤트 배지
+  eventBadge() {
+    return this.#order.getEventBadge();
+  }
 }
 
 function parsingOrder(orderStr) {

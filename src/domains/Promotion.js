@@ -50,6 +50,19 @@ class Promotion {
   static giveaway(payment) {
     return payment > 120000 ? { type: '증정 이벤트', discount: 25000 } : false;
   }
+
+  static EventBadge(promotionAmount) {
+    if (promotionAmount > 20000) {
+      return '산타';
+    }
+    if (promotionAmount > 10000) {
+      return '트리';
+    }
+    if (promotionAmount > 5000) {
+      return '별';
+    }
+    return '없음';
+  }
 }
 
 const specialDate = [3, 10, 17, 24, 25, 31];

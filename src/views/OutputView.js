@@ -54,6 +54,16 @@ const OutputView = {
     Console.print('\n<할인 후 예상 결제 금액>');
     Console.print(`${payment}원`);
   },
+
+  printEventBadge(badge) {
+    Console.print('\n<12월 이벤트 배지>');
+    if (badge == DEFAULT) {
+      Console.print('없음');
+
+      return;
+    }
+    Console.print(`<${badge}>`);
+  },
 };
 
 export default OutputView;
