@@ -40,9 +40,10 @@ class App {
   }
 
   printEventPlanner(user) {
-    OutputView.printMenu(user.getOrderMenu());
-    OutputView.printPaymentBeforeDiscount(user.getPaymentBeforeDiscount());
-    OutputView.printGiveawayPromotion(user.getGiveawayPromotion());
+    OutputView.printMenu(user.orderMenu());
+    OutputView.printPaymentBeforeDiscount(user.paymentBeforeDiscount());
+    OutputView.printGiveawayPromotion(user.giveawayPromotion());
+    OutputView.printPromotionDetail(user.promotionDetail());
   }
 }
 

@@ -7,6 +7,18 @@ class Menu {
     return allMenu.some((menuItem) => menuItem.name === item);
   }
 
+  static isMain(item) {
+    const main = menu.main.map((item) => item.name);
+
+    return main.includes(item);
+  }
+
+  static isDessert(item) {
+    const dessert = menu.dessert.map((item) => item.name);
+
+    return dessert.includes(item);
+  }
+
   static isOnlyDrink(order) {
     const drinks = menu.drink.map((item) => item.name);
 

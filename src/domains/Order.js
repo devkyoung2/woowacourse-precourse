@@ -4,6 +4,7 @@ import Promotion from './Promotion.js';
 class Order {
   #order;
   #date;
+  #promotion;
   #applyPromotion;
   #totalPayment;
 
@@ -29,9 +30,23 @@ class Order {
     return totalPayment;
   }
 
-  // 증정
+  // 증정 메뉴
   getGiveawayPromotion() {
-    return this.#applyPromotion && Promotion.getGift(this.#totalPayment);
+    return this.#applyPromotion && Promotion.giveaway(this.#totalPayment);
+  }
+
+  // 혜택 내역
+  getPromotionDetail() {
+    if (!this.#applyPromotion) return false;
+
+    const promotionDetail = [];
+    promotionDetail.push(Promotion.christmasDiscount(this.#date));
+    promotionDetail.push(Promotion.weekdayDessert(this.#date, this.#order));
+    promotionDetail.push(Promotion.weekendMain(this.#date, this.#order));
+    promotionDetail.push(Promotion.specialDate(this.#date, this.#order));
+    promotionDetail.push(Promotion.giveaway(this.#totalPayment));
+
+    return promotionDetail;
   }
 }
 

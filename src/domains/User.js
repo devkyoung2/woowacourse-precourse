@@ -40,22 +40,32 @@ export default class User {
   }
 
   // 주문 메뉴
-  getOrderMenu() {
+  orderMenu() {
     return this.#order.getOrderMenu();
   }
   // 할인 전 총주문 금액
-  getPaymentBeforeDiscount() {
+  paymentBeforeDiscount() {
+    // 게터로 수정
     return this.#order.caculateOrder();
   }
 
   // 증정 메뉴
-  getGiveawayPromotion() {
+  giveawayPromotion() {
     const giveaway = this.#order.getGiveawayPromotion();
 
     return giveaway ? '샴페인 1개' : '없음';
   }
 
   // 혜택 내역
+  promotionDetail() {
+    const promotionDetail = this.#order.getPromotionDetail();
+
+    const applyPromotionDetail = promotionDetail.filter((item) => item);
+
+    console.log(applyPromotionDetail);
+    return applyPromotionDetail || '없음';
+  }
+
   // 총혜택 금액
   // 할인 후 예상 결제 금액
   // 12월 이벤트 배지

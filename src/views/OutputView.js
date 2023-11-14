@@ -23,6 +23,14 @@ const OutputView = {
     Console.print('\n<증정 메뉴>');
     Console.print(`${giveaway}`);
   },
+
+  printPromotionDetail(promotionDetail) {
+    Console.print('\n<혜택 내역>');
+
+    promotionDetail.forEach((promotion) =>
+      Console.print(`${promotion.type}: -${promotion.discount}원`)
+    );
+  },
 };
 
 export default OutputView;
