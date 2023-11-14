@@ -9,8 +9,9 @@ const OutputView = {
     Console.print(Message);
   },
 
-  printMenu() {
-    Console.print('<주문 메뉴>');
+  printMenu(orderMenu) {
+    Console.print('\n<주문 메뉴>');
+    orderMenu.forEach((menu) => Console.print(`${menu.name} ${menu.count}개`));
   },
 };
 export default OutputView;

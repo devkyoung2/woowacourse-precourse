@@ -18,6 +18,9 @@ export default class User {
     // orderMenu 이상 없을 시, 주문 인스턴스 생성
     // 생성된 객체 내부에서 주문 유효성 검증
   }
+  getOrderMenu() {
+    return this.#order.getOrderMenu();
+  }
 
   #validationDate(date) {
     const dateNumber = Number(date);

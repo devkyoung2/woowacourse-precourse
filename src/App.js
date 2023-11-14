@@ -13,6 +13,7 @@ class App {
     OutputView.printWecome();
     await this.inputDate();
     await this.inputOrderMenu();
+    OutputView.printMenu(this.#user.getOrderMenu());
   }
 
   async inputDate() {

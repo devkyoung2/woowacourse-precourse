@@ -24,6 +24,10 @@ class Order {
       totalPrice += item.count * Menu.getPrice(item.name);
     });
   }
+
+  getOrderMenu() {
+    return this.#order;
+  }
 }
 
 function countOrderItems(order) {
