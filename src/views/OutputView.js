@@ -18,6 +18,11 @@ const OutputView = {
     Console.print('\n<할인 전 총주문 금액>');
     Console.print(`${payment}원`);
   },
+
+  printGiveawayPromotion(giveaway) {
+    Console.print('\n<증정 메뉴>');
+    Console.print(`${giveaway}`);
+  },
 };
 
 export default OutputView;

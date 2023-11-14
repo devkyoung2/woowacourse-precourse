@@ -1,40 +1,38 @@
 import Menu from './Menu.js';
+import Promotion from './Promotion.js';
 
 class Order {
   #order;
+  #date;
+  #applyPromotion;
+  #totalPayment;
 
-  constructor(order) {
-    this.#validationOrder(order);
+  constructor(date, order) {
     this.#order = order;
+    this.#date = date;
+    this.#totalPayment = this.caculateOrder();
+    this.#applyPromotion = Promotion.isApply(this.#totalPayment);
   }
 
-  #validationOrder(order) {
-    if (Menu.isOnlyDrink(order))
-      throw new Error('[ERROR] 음료만 주문할 수 없습니다.');
-
-    if (countOrderItems(order) > 20) {
-      throw new Error('[ERROR] 메뉴는 20개까지 주문할 수 있습니다.');
-    }
+  getOrderMenu() {
+    return this.#order;
   }
 
-  caculateOrder(order) {
+  // 계산
+  caculateOrder() {
     let totalPayment = 0;
 
-    order.forEach((item) => {
+    this.#order.forEach((item) => {
       totalPayment += item.count * Menu.getPrice(item.name);
     });
 
     return totalPayment;
   }
 
-  getOrderMenu() {
-    return this.#order;
+  // 증정
+  getGiveawayPromotion() {
+    return this.#applyPromotion && Promotion.getGift(this.#totalPayment);
   }
-}
-
-function countOrderItems(order) {
-  const items = order.map((item) => item.count);
-  return items.reduce((acc, cur) => acc + cur);
 }
 
 export default Order;

@@ -5,24 +5,21 @@ import User from './domains/User.js';
 class App {
   #user;
 
-  constructor() {
-    this.#user = new User();
-  }
-
   async run() {
     OutputView.printWecome();
-    await this.inputDate();
-    await this.inputOrderMenu();
-    OutputView.printMenu(this.#user.getOrderMenu());
-    OutputView.printPaymentBeforeDiscount(
-      this.#user.getPaymentBeforeDiscount()
-    );
+
+    const date = await this.inputDate();
+    const order = await this.inputOrderMenu();
+    this.#user = new User(date, order);
+
+    this.printEventPlanner(this.#user);
   }
 
   async inputDate() {
     try {
       const date = await InputView.readDate();
-      this.#user.setDate(date);
+
+      return date;
     } catch (error) {
       OutputView.printError(error.message);
 
@@ -33,12 +30,19 @@ class App {
   async inputOrderMenu() {
     try {
       const orderMenu = await InputView.readOrderMenu();
-      this.#user.setOrderMenu(orderMenu);
+
+      return orderMenu;
     } catch (error) {
       OutputView.printError(error.message);
 
       return this.inputOrderMenu();
     }
+  }
+
+  printEventPlanner(user) {
+    OutputView.printMenu(user.getOrderMenu());
+    OutputView.printPaymentBeforeDiscount(user.getPaymentBeforeDiscount());
+    OutputView.printGiveawayPromotion(user.getGiveawayPromotion());
   }
 }
 

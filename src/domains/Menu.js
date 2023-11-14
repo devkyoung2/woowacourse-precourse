@@ -7,10 +7,10 @@ class Menu {
     return allMenu.some((menuItem) => menuItem.name === item);
   }
 
-  static isOnlyDrink(items) {
+  static isOnlyDrink(order) {
     const drinks = menu.drink.map((item) => item.name);
 
-    return items.every((item) => drinks.includes(item.name));
+    return order.every((item) => drinks.includes(item.name));
   }
 
   static getPrice(itemName) {

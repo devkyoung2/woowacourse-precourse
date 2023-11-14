@@ -2,33 +2,16 @@ import { isNatural } from '../utils/validate.js';
 import Order from './Order.js';
 import Menu from './Menu.js';
 
+const MAX_ORDER_COUNT = 20;
+
 export default class User {
-  #date;
   #order;
-  #orderDetail;
 
-  setDate(date) {
-    this.#validationDate(date);
-    this.#date = date;
+  constructor(date, order) {
+    const validateDate = this.#validationDate(date);
+    const validateOrder = this.#validationOrder(order);
+    this.#order = new Order(validateDate, validateOrder);
   }
-
-  // 함수명 수정
-  setOrderMenu(order) {
-    const validatedOrder = this.#validationOrder(order);
-    this.#order = new Order(validatedOrder);
-    this.#orderDetail = this.#order.getOrderMenu();
-    // orderMenu 이상 없을 시, 주문 인스턴스 생성
-    // 생성된 객체 내부에서 주문 유효성 검증
-  }
-
-  getOrderMenu() {
-    return this.#orderDetail;
-  }
-
-  getPaymentBeforeDiscount() {
-    return this.#order.caculateOrder(this.#orderDetail);
-  }
-  // getPromotion
 
   #validationDate(date) {
     const dateNumber = Number(date);
@@ -42,25 +25,52 @@ export default class User {
     return dateNumber;
   }
 
-  #validationOrder(order) {
-    const parsedOrder = parsingOrder(order);
-    isDuplicatedOrder(parsedOrder);
-    hasOrderInMenu(parsedOrder);
-    const validatedOrder = isValidatedItemsCount(parsedOrder);
+  #validationOrder(orderStr) {
+    const parsedOrderArr = parsingOrder(orderStr);
+
+    isDuplicatedOrder(parsedOrderArr);
+    hasOrderNameInMenu(parsedOrderArr);
+
+    const validatedOrder = getValidatedItemsCount(parsedOrderArr);
+
+    isOveredMaxOrderCount(validatedOrder);
+    isOrderOnlyDrink(validatedOrder);
 
     return validatedOrder;
   }
+
+  // 주문 메뉴
+  getOrderMenu() {
+    return this.#order.getOrderMenu();
+  }
+  // 할인 전 총주문 금액
+  getPaymentBeforeDiscount() {
+    return this.#order.caculateOrder();
+  }
+
+  // 증정 메뉴
+  getGiveawayPromotion() {
+    const giveaway = this.#order.getGiveawayPromotion();
+
+    return giveaway ? '샴페인 1개' : '없음';
+  }
+
+  // 혜택 내역
+  // 총혜택 금액
+  // 할인 후 예상 결제 금액
+  // 12월 이벤트 배지
 }
 
-function parsingOrder(orders) {
+function parsingOrder(orderStr) {
   const parsedOrders = [];
 
-  for (const order of orders.split(',')) {
+  for (const order of orderStr.split(',')) {
     const parsedOrder = order.split('-');
 
     if (parsedOrder.length !== 2) {
       throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
     }
+
     const [item, count] = parsedOrder;
     parsedOrders.push({ name: item, count });
   }
@@ -80,23 +90,37 @@ function isDuplicatedOrder(orderArr) {
   });
 }
 
-function hasOrderInMenu(parsedOrder) {
-  parsedOrder.forEach((item) => {
-    if (!Menu.hasItemInMenu(item.name))
+function hasOrderNameInMenu(orderArr) {
+  orderArr.forEach((item) => {
+    if (!Menu.hasItemInMenu(item.name)) {
       throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+    }
+  });
+}
+// 기능 수정
+function getValidatedItemsCount(orderArr) {
+  return orderArr.map((item) => {
+    const count = Number(item.count);
+
+    if (isNaN(count) || count < 1) {
+      throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+    }
+
+    return { name: item.name, count };
   });
 }
 
-function isValidatedItemsCount(parsedOrder) {
-  return parsedOrder.map((item) => {
-    if (parseInt(item.count) !== Number(item.count)) {
-      throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
-    }
+function isOveredMaxOrderCount(orderArr) {
+  const items = orderArr.map((item) => item.count);
+  const itemsCount = items.reduce((acc, cur) => acc + cur);
 
-    if (parseInt(item.count) < 1) {
-      throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
-    }
+  if (itemsCount > MAX_ORDER_COUNT) {
+    throw new Error('[ERROR] 메뉴는 20개까지 주문할 수 있습니다.');
+  }
+}
 
-    return { name: item.name, count: Number(item.count) };
-  });
+function isOrderOnlyDrink(orderArr) {
+  if (Menu.isOnlyDrink(orderArr)) {
+    throw new Error('[ERROR] 음료만 주문할 수 없습니다.');
+  }
 }
