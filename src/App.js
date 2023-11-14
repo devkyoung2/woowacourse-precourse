@@ -14,6 +14,9 @@ class App {
     await this.inputDate();
     await this.inputOrderMenu();
     OutputView.printMenu(this.#user.getOrderMenu());
+    OutputView.printPaymentBeforeDiscount(
+      this.#user.getPaymentBeforeDiscount()
+    );
   }
 
   async inputDate() {

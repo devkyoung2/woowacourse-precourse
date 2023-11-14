@@ -5,6 +5,7 @@ import Menu from './Menu.js';
 export default class User {
   #date;
   #order;
+  #orderDetail;
 
   setDate(date) {
     this.#validationDate(date);
@@ -15,12 +16,19 @@ export default class User {
   setOrderMenu(order) {
     const validatedOrder = this.#validationOrder(order);
     this.#order = new Order(validatedOrder);
+    this.#orderDetail = this.#order.getOrderMenu();
     // orderMenu 이상 없을 시, 주문 인스턴스 생성
     // 생성된 객체 내부에서 주문 유효성 검증
   }
+
   getOrderMenu() {
-    return this.#order.getOrderMenu();
+    return this.#orderDetail;
   }
+
+  getPaymentBeforeDiscount() {
+    return this.#order.caculateOrder(this.#orderDetail);
+  }
+  // getPromotion
 
   #validationDate(date) {
     const dateNumber = Number(date);
@@ -39,6 +47,7 @@ export default class User {
     isDuplicatedOrder(parsedOrder);
     hasOrderInMenu(parsedOrder);
     const validatedOrder = isValidatedItemsCount(parsedOrder);
+
     return validatedOrder;
   }
 }

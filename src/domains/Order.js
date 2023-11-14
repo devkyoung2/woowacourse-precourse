@@ -18,11 +18,13 @@ class Order {
   }
 
   caculateOrder(order) {
-    let totalPrice = 0;
+    let totalPayment = 0;
 
     order.forEach((item) => {
-      totalPrice += item.count * Menu.getPrice(item.name);
+      totalPayment += item.count * Menu.getPrice(item.name);
     });
+
+    return totalPayment;
   }
 
   getOrderMenu() {

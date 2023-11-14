@@ -13,5 +13,11 @@ const OutputView = {
     Console.print('\n<주문 메뉴>');
     orderMenu.forEach((menu) => Console.print(`${menu.name} ${menu.count}개`));
   },
+
+  printPaymentBeforeDiscount(payment) {
+    Console.print('\n<할인 전 총주문 금액>');
+    Console.print(`${payment}원`);
+  },
 };
+
 export default OutputView;
