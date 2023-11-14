@@ -4,9 +4,9 @@ import Promotion from './Promotion.js';
 class Order {
   #order;
   #date;
-  #promotion;
   #applyPromotion;
-  #totalPayment;
+  #totalPayment = [];
+  #totalPromotion = [];
 
   constructor(date, order) {
     this.#order = order;
@@ -46,8 +46,21 @@ class Order {
     promotionDetail.push(Promotion.specialDate(this.#date, this.#order));
     promotionDetail.push(Promotion.giveaway(this.#totalPayment));
 
-    return promotionDetail;
+    const applyPromotionDetail = promotionDetail.filter((item) => item);
+
+    this.#totalPromotion = applyPromotionDetail;
+    return applyPromotionDetail;
   }
+
+  getTotalPromotionAmount() {
+    const a = this.#totalPromotion.reduce((acc, cur) => {
+      return acc + cur.discount;
+    }, 0);
+
+    return a;
+  }
+
+  getPaymentBeforeDiscount() {}
 }
 
 export default Order;

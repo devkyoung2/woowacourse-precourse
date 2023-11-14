@@ -44,6 +44,7 @@ class App {
     OutputView.printPaymentBeforeDiscount(user.paymentBeforeDiscount());
     OutputView.printGiveawayPromotion(user.giveawayPromotion());
     OutputView.printPromotionDetail(user.promotionDetail());
+    OutputView.printTotalPromotionAmount(user.totalPromotionAmount());
   }
 }
 

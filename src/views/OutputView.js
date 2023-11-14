@@ -31,6 +31,11 @@ const OutputView = {
       Console.print(`${promotion.type}: -${promotion.discount}원`)
     );
   },
+
+  printTotalPromotionAmount(promotionAmount) {
+    Console.print('\n<총혜택 금액>');
+    Console.print(`-${promotionAmount}원`);
+  },
 };
 
 export default OutputView;

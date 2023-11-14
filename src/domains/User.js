@@ -60,14 +60,18 @@ export default class User {
   promotionDetail() {
     const promotionDetail = this.#order.getPromotionDetail();
 
-    const applyPromotionDetail = promotionDetail.filter((item) => item);
-
-    console.log(applyPromotionDetail);
-    return applyPromotionDetail || '없음';
+    return promotionDetail || '없음';
   }
 
   // 총혜택 금액
+  totalPromotionAmount() {
+    return this.#order.getTotalPromotionAmount();
+  }
+
   // 할인 후 예상 결제 금액
+  paymentBeforeDiscount() {
+    return this.#order.getPaymentBeforeDiscount();
+  }
   // 12월 이벤트 배지
 }
 
