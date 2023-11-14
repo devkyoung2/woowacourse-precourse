@@ -20,21 +20,21 @@ const OutputView = {
     Console.print(`${payment}원`);
   },
 
-  printGiveawayPromotion(giveaway) {
+  printGiveaway(giveaway) {
     Console.print('\n<증정 메뉴>');
     Console.print(`${giveaway}`);
   },
 
-  printPromotionDetail(promotionDetail) {
+  printPromotionDetails(promotionDetails) {
     Console.print('\n<혜택 내역>');
 
-    if (promotionDetail == DEFAULT) {
+    if (promotionDetails == DEFAULT) {
       Console.print('없음');
 
       return;
     }
 
-    promotionDetail.forEach((promotion) =>
+    promotionDetails.forEach((promotion) =>
       Console.print(`${promotion.type}: -${promotion.discount}원`)
     );
   },

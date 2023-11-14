@@ -33,25 +33,25 @@ class Order {
   }
 
   // 증정 메뉴
-  getGiveawayPromotion() {
+  getGiveaway() {
     return this.#applyPromotion && Promotion.giveaway(this.#totalPayment);
   }
 
   // 혜택 내역
-  getPromotionDetail() {
+  getPromotionDetails() {
     if (!this.#applyPromotion) return false;
 
-    const promotionDetail = [];
-    promotionDetail.push(Promotion.christmasDiscount(this.#date));
-    promotionDetail.push(Promotion.weekdayDessert(this.#date, this.#order));
-    promotionDetail.push(Promotion.weekendMain(this.#date, this.#order));
-    promotionDetail.push(Promotion.specialDate(this.#date, this.#order));
-    promotionDetail.push(Promotion.giveaway(this.#totalPayment));
+    const promotionDetails = [];
+    promotionDetails.push(Promotion.christmasDiscount(this.#date));
+    promotionDetails.push(Promotion.weekdayDessert(this.#date, this.#order));
+    promotionDetails.push(Promotion.weekendMain(this.#date, this.#order));
+    promotionDetails.push(Promotion.specialDate(this.#date, this.#order));
+    promotionDetails.push(Promotion.giveaway(this.#totalPayment));
 
-    const applyPromotionDetail = promotionDetail.filter((item) => item);
+    const applyPromotionDetails = promotionDetails.filter((item) => item);
 
-    this.#totalPromotion = applyPromotionDetail;
-    return applyPromotionDetail;
+    this.#totalPromotion = applyPromotionDetails;
+    return applyPromotionDetails;
   }
 
   // 총 혜택 금액

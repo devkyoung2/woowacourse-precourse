@@ -1,6 +1,6 @@
-import { isNatural } from '../utils/validate.js';
 import Order from './Order.js';
 import Menu from './Menu.js';
+import { isNatural } from '../utils/validate.js';
 
 const MAX_ORDER_COUNT = 20;
 
@@ -57,17 +57,17 @@ export default class User {
   }
 
   // 증정 메뉴
-  giveawayPromotion() {
-    const giveaway = this.#order.getGiveawayPromotion();
+  giveaway() {
+    const item = this.#order.getGiveaway();
 
-    return giveaway ? '샴페인 1개' : '없음';
+    return item ? '샴페인 1개' : '없음';
   }
 
   // 혜택 내역
-  promotionDetail() {
-    const promotionDetail = this.#order.getPromotionDetail();
+  promotionDetails() {
+    const promotionDetails = this.#order.getPromotionDetails();
 
-    return promotionDetail || '없음';
+    return promotionDetails || '없음';
   }
 
   // 총혜택 금액
