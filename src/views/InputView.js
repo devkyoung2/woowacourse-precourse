@@ -1,49 +1,53 @@
 import { Console } from '@woowacourse/mission-utils';
 import { isEmpty, isTrimed } from '../utils/validate.js';
+import {
+  INVALID_DATE_ERROR,
+  INVALID_ORDER_ERROR,
+} from '../constants/message.js';
 
 const InputView = {
   async readDate() {
-    const input = await Console.readLineAsync(
+    const date = await Console.readLineAsync(
       '12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)\n'
     );
 
-    validationDate(input);
+    validationDate(date);
 
-    return input;
+    return date;
   },
 
   async readOrderMenu() {
-    const input = await Console.readLineAsync(
+    const orderMenu = await Console.readLineAsync(
       '\n주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)\n'
     );
 
-    validationOrderMenu(input);
+    validationOrderMenu(orderMenu);
 
-    return input;
+    return orderMenu;
   },
 };
 
 function validationDate(date) {
   if (isEmpty(date)) {
-    throw new Error('[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.\n');
+    throw new Error(INVALID_DATE_ERROR);
   }
 
   if (!isTrimed(date)) {
-    throw new Error('[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.\n');
+    throw new Error(INVALID_DATE_ERROR);
   }
 
   if (isNaN(date)) {
-    throw new Error('[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.\n');
+    throw new Error(INVALID_DATE_ERROR);
   }
 }
 
 function validationOrderMenu(orderMenu) {
   if (isEmpty(orderMenu)) {
-    throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.\n');
+    throw new Error(INVALID_ORDER_ERROR);
   }
 
   if (!isTrimed(orderMenu)) {
-    throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.\n');
+    throw new Error(INVALID_ORDER_ERROR);
   }
 }
 export default InputView;
