@@ -35,8 +35,8 @@ export default class User {
     const parsedOrder = parsingOrder(order);
     isDuplicatedOrder(parsedOrder);
     hasOrderInMenu(parsedOrder);
-    isValidatedItemsCount(parsedOrder);
-    return parsedOrder;
+    const validatedOrder = isValidatedItemsCount(parsedOrder);
+    return validatedOrder;
   }
 }
 
@@ -76,7 +76,7 @@ function hasOrderInMenu(parsedOrder) {
 }
 
 function isValidatedItemsCount(parsedOrder) {
-  parsedOrder.forEach((item) => {
+  return parsedOrder.map((item) => {
     if (parseInt(item.count) !== Number(item.count)) {
       throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
     }
@@ -84,5 +84,7 @@ function isValidatedItemsCount(parsedOrder) {
     if (parseInt(item.count) < 1) {
       throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
     }
+
+    return { name: item.name, count: Number(item.count) };
   });
 }
