@@ -2,7 +2,7 @@ import Menu from './Menu.js';
 import Promotion from './Promotion.js';
 
 class Order {
-  #order;
+  #orderMenu;
   #date;
   #applyPromotion;
   #totalPayment = [];
@@ -12,20 +12,20 @@ class Order {
     this.#date = date;
   }
   setOrder(order) {
-    this.#order = order;
+    this.#orderMenu = order;
     this.#totalPayment = this.caculateOrder();
     this.#applyPromotion = Promotion.isApply(this.#totalPayment);
   }
 
   getOrderMenu() {
-    return this.#order;
+    return this.#orderMenu;
   }
 
   // 계산
   caculateOrder() {
     let totalPayment = 0;
 
-    this.#order.forEach((item) => {
+    this.#orderMenu.forEach((item) => {
       totalPayment += item.count * Menu.getPrice(item.name);
     });
 
@@ -43,9 +43,11 @@ class Order {
 
     const promotionDetails = [];
     promotionDetails.push(Promotion.christmasDiscount(this.#date));
-    promotionDetails.push(Promotion.weekdayDessert(this.#date, this.#order));
-    promotionDetails.push(Promotion.weekendMain(this.#date, this.#order));
-    promotionDetails.push(Promotion.specialDate(this.#date, this.#order));
+    promotionDetails.push(
+      Promotion.weekdayDessert(this.#date, this.#orderMenu)
+    );
+    promotionDetails.push(Promotion.weekendMain(this.#date, this.#orderMenu));
+    promotionDetails.push(Promotion.specialDate(this.#date, this.#orderMenu));
     promotionDetails.push(Promotion.giveaway(this.#totalPayment));
 
     const applyPromotionDetails = promotionDetails.filter((item) => item);

@@ -1,9 +1,6 @@
 import { Console } from '@woowacourse/mission-utils';
 import { isEmpty, isTrimed } from '../utils/validate.js';
-import {
-  INVALID_DATE_ERROR,
-  INVALID_ORDER_ERROR,
-} from '../constants/message.js';
+import { ERROR_MESSAGE } from '../constants/message.js';
 
 const InputView = {
   async readDate() {
@@ -29,25 +26,25 @@ const InputView = {
 
 function validationDate(date) {
   if (isEmpty(date)) {
-    throw new Error(INVALID_DATE_ERROR);
+    throw new Error(ERROR_MESSAGE.INVALID_DATE);
   }
 
   if (!isTrimed(date)) {
-    throw new Error(INVALID_DATE_ERROR);
+    throw new Error(ERROR_MESSAGE.INVALID_DATE);
   }
 
   if (isNaN(date)) {
-    throw new Error(INVALID_DATE_ERROR);
+    throw new Error(ERROR_MESSAGE.INVALID_DATE);
   }
 }
 
 function validationOrderMenu(orderMenu) {
   if (isEmpty(orderMenu)) {
-    throw new Error(INVALID_ORDER_ERROR);
+    throw new Error(ERROR_MESSAGE.INVALID_ORDER);
   }
 
   if (!isTrimed(orderMenu)) {
-    throw new Error(INVALID_ORDER_ERROR);
+    throw new Error(ERROR_MESSAGE.INVALID_ORDER);
   }
 }
 export default InputView;

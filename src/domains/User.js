@@ -1,8 +1,7 @@
 import Order from './Order.js';
 import Menu from './Menu.js';
 import { isNatural } from '../utils/validate.js';
-
-const MAX_ORDER_COUNT = 20;
+import { ERROR_MESSAGE, MAX_ORDER_COUNT } from '../constants/message.js';
 
 export default class User {
   #order;
@@ -12,38 +11,38 @@ export default class User {
   }
 
   setDate(date) {
-    const validateDate = this.#validationDate(date);
-    this.#order.setDate(validateDate);
+    const validatedDate = this.#validationDate(date);
+    this.#order.setDate(validatedDate);
   }
-  setOrderMenu(order) {
-    const validateOrder = this.#validationOrder(order);
-    this.#order.setOrder(validateOrder);
+
+  setOrderMenu(orderMenu) {
+    const validatedOrderMenu = this.#validationOrderMenu(orderMenu);
+    this.#order.setOrder(validatedOrderMenu);
   }
 
   #validationDate(date) {
     const dateNumber = Number(date);
 
-    if (!isNatural(dateNumber))
-      throw new Error('[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.');
+    if (!isNatural(dateNumber)) throw new Error(ERROR_MESSAGE.INVALID_DATE);
 
     if (dateNumber < 1 || dateNumber > 31)
-      throw new Error('[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.');
+      throw new Error(ERROR_MESSAGE.INVALID_DATE);
 
     return dateNumber;
   }
 
-  #validationOrder(orderStr) {
-    const parsedOrderArr = parsingOrder(orderStr);
+  #validationOrderMenu(orderMenuStr) {
+    const parsedOrderMenuArr = parsingOrderMenu(orderMenuStr);
 
-    isDuplicatedOrder(parsedOrderArr);
-    hasOrderNameInMenu(parsedOrderArr);
+    isDuplicatedOrderMenu(parsedOrderMenuArr);
+    hasOrderMenuNameInMenu(parsedOrderMenuArr);
 
-    const validatedOrder = getValidatedItemsCount(parsedOrderArr);
+    const validatedOrderMenu = getValidatedItemsCount(parsedOrderMenuArr);
 
-    isOveredMaxOrderCount(validatedOrder);
-    isOrderOnlyDrink(validatedOrder);
+    isOveredMaxOrderCount(validatedOrderMenu);
+    isOrderOnlyDrink(validatedOrderMenu);
 
-    return validatedOrder;
+    return validatedOrderMenu;
   }
 
   // 주문 메뉴
@@ -85,66 +84,67 @@ export default class User {
   }
 }
 
-function parsingOrder(orderStr) {
-  const parsedOrders = [];
+function parsingOrderMenu(orderMenuStr) {
+  const parsedOrderMenus = [];
 
-  for (const order of orderStr.split(',')) {
-    const parsedOrder = order.split('-');
+  for (const orderMenu of orderMenuStr.split(',')) {
+    const parsedOrderMenu = orderMenu.split('-');
 
-    if (parsedOrder.length !== 2) {
-      throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+    if (parsedOrderMenu.length !== 2) {
+      throw new Error(ERROR_MESSAGE.INVALID_ORDER);
     }
 
-    const [item, count] = parsedOrder;
-    parsedOrders.push({ name: item, count });
+    const [name, count] = parsedOrderMenu;
+    parsedOrderMenus.push({ name, count });
   }
 
-  return parsedOrders;
+  return parsedOrderMenus;
 }
 
-function isDuplicatedOrder(orderArr) {
+function isDuplicatedOrderMenu(orderMenuArr) {
   const orderName = [];
 
-  orderArr.forEach((item) => {
+  orderMenuArr.forEach((item) => {
     if (orderName.includes(item.name)) {
-      throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+      throw new Error(ERROR_MESSAGE.INVALID_ORDER);
     }
 
     orderName.push(item.name);
   });
 }
 
-function hasOrderNameInMenu(orderArr) {
-  orderArr.forEach((item) => {
+function hasOrderMenuNameInMenu(orderMenuArr) {
+  orderMenuArr.forEach((item) => {
     if (!Menu.hasItemInMenu(item.name)) {
-      throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+      throw new Error(ERROR_MESSAGE.INVALID_ORDER);
     }
   });
 }
+
 // 기능 수정
-function getValidatedItemsCount(orderArr) {
-  return orderArr.map((item) => {
-    const count = Number(item.count);
+function getValidatedItemsCount(orderMenuArr) {
+  return orderMenuArr.map((item) => {
+    const itemCount = Number(item.count);
 
-    if (isNaN(count) || count < 1) {
-      throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
+    if (isNaN(itemCount) || itemCount < 1) {
+      throw new Error(ERROR_MESSAGE.INVALID_ORDER);
     }
 
-    return { name: item.name, count };
+    return { name: item.name, count: itemCount };
   });
 }
 
-function isOveredMaxOrderCount(orderArr) {
-  const items = orderArr.map((item) => item.count);
-  const itemsCount = items.reduce((acc, cur) => acc + cur);
+function isOveredMaxOrderCount(orderMenuArr) {
+  const itemsCount = orderMenuArr.map((item) => item.count);
+  const totalItemsCount = itemsCount.reduce((acc, cur) => acc + cur);
 
-  if (itemsCount > MAX_ORDER_COUNT) {
-    throw new Error('[ERROR] 메뉴는 20개까지 주문할 수 있습니다.');
+  if (totalItemsCount > MAX_ORDER_COUNT) {
+    throw new Error(ERROR_MESSAGE.OVER_MAX_ORDER);
   }
 }
 
-function isOrderOnlyDrink(orderArr) {
-  if (Menu.isOnlyDrink(orderArr)) {
-    throw new Error('[ERROR] 음료만 주문할 수 없습니다.');
+function isOrderOnlyDrink(orderMenuArr) {
+  if (Menu.isOnlyDrink(orderMenuArr)) {
+    throw new Error(ERROR_MESSAGE.ORDER_ONLY_DRINK);
   }
 }
