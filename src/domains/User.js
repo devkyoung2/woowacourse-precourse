@@ -62,9 +62,7 @@ export default class User {
   }
 
   promotionDetails() {
-    const promotionDetails = this.#order.getPromotionDetails();
-
-    return promotionDetails;
+    return this.#order.getPromotionDetails();
   }
 
   totalPromotionAmount() {
