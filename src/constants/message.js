@@ -1,3 +1,6 @@
+export const CURRENT_MONTH = '12';
+export const DEFAULT_OUTPUT = '없음';
+
 export const MAX_ORDER_COUNT = 20;
 
 export const ERROR_MESSAGE = {

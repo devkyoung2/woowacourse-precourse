@@ -38,7 +38,8 @@ class App {
   }
 
   printEventPlanner(user) {
-    OutputView.printMenu(user.orderMenu());
+    OutputView.printPreviewPromotion(user.getVisitDate());
+    OutputView.printOrderMenu(user.orderMenu());
     OutputView.printPaymentBeforeDiscount(user.paymentBeforeDiscount());
     OutputView.printGiveaway(user.giveaway());
     OutputView.printPromotionDetails(user.promotionDetails());
