@@ -1,7 +1,7 @@
 import Order from './Order.js';
 import Menu from './Menu.js';
-import { isNatural } from '../utils/validate.js';
 import { ERROR_MESSAGE, MAX_ORDER_COUNT } from '../constants/message.js';
+import { isNatural } from '../utils/validate.js';
 
 export default class User {
   #order;
@@ -17,7 +17,7 @@ export default class User {
 
   setOrderMenu(orderMenu) {
     const validatedOrderMenu = this.#validationOrderMenu(orderMenu);
-    this.#order.setOrder(validatedOrderMenu);
+    this.#order.setOrderMenu(validatedOrderMenu);
   }
 
   #validationDate(date) {
@@ -34,51 +34,47 @@ export default class User {
   #validationOrderMenu(orderMenuStr) {
     const parsedOrderMenuArr = parsingOrderMenu(orderMenuStr);
 
-    isDuplicatedOrderMenu(parsedOrderMenuArr);
-    hasOrderMenuNameInMenu(parsedOrderMenuArr);
+    checkDuplicatedOrderMenu(parsedOrderMenuArr);
+    checkOrderMenuNameInMenu(parsedOrderMenuArr);
 
     const validatedOrderMenu = getValidatedItemsCount(parsedOrderMenuArr);
 
-    isOveredMaxOrderCount(validatedOrderMenu);
-    isOrderOnlyDrink(validatedOrderMenu);
+    checkOveredMaxOrderCount(validatedOrderMenu);
+    checkOrderOnlyDrink(validatedOrderMenu);
 
     return validatedOrderMenu;
   }
 
-  // 주문 메뉴
+  getVisitDate() {
+    return this.#order.getVisitDate();
+  }
+
   orderMenu() {
     return this.#order.getOrderMenu();
   }
-  // 할인 전 총주문 금액
+
   paymentBeforeDiscount() {
-    // 게터로 수정
-    return this.#order.caculateOrder();
+    return this.#order.getPaymentBeforeDiscount();
   }
 
-  // 증정 메뉴
   giveaway() {
-    const item = this.#order.getGiveaway();
-
-    return item ? '샴페인 1개' : '없음';
+    return this.#order.getGiveaway();
   }
 
-  // 혜택 내역
   promotionDetails() {
     const promotionDetails = this.#order.getPromotionDetails();
 
-    return promotionDetails || '없음';
+    return promotionDetails;
   }
 
-  // 총혜택 금액
   totalPromotionAmount() {
     return this.#order.getTotalPromotionAmount();
   }
 
-  // 할인 후 예상 결제 금액
   paymentAfterDiscount() {
     return this.#order.getPaymentAfterDiscount();
   }
-  // 12월 이벤트 배지
+
   eventBadge() {
     return this.#order.getEventBadge();
   }
@@ -101,7 +97,7 @@ function parsingOrderMenu(orderMenuStr) {
   return parsedOrderMenus;
 }
 
-function isDuplicatedOrderMenu(orderMenuArr) {
+function checkDuplicatedOrderMenu(orderMenuArr) {
   const orderName = [];
 
   orderMenuArr.forEach((item) => {
@@ -113,7 +109,7 @@ function isDuplicatedOrderMenu(orderMenuArr) {
   });
 }
 
-function hasOrderMenuNameInMenu(orderMenuArr) {
+function checkOrderMenuNameInMenu(orderMenuArr) {
   orderMenuArr.forEach((item) => {
     if (!Menu.hasItemInMenu(item.name)) {
       throw new Error(ERROR_MESSAGE.INVALID_ORDER);
@@ -121,7 +117,6 @@ function hasOrderMenuNameInMenu(orderMenuArr) {
   });
 }
 
-// 기능 수정
 function getValidatedItemsCount(orderMenuArr) {
   return orderMenuArr.map((item) => {
     const itemCount = Number(item.count);
@@ -134,7 +129,7 @@ function getValidatedItemsCount(orderMenuArr) {
   });
 }
 
-function isOveredMaxOrderCount(orderMenuArr) {
+function checkOveredMaxOrderCount(orderMenuArr) {
   const itemsCount = orderMenuArr.map((item) => item.count);
   const totalItemsCount = itemsCount.reduce((acc, cur) => acc + cur);
 
@@ -143,7 +138,7 @@ function isOveredMaxOrderCount(orderMenuArr) {
   }
 }
 
-function isOrderOnlyDrink(orderMenuArr) {
+function checkOrderOnlyDrink(orderMenuArr) {
   if (Menu.isOnlyDrink(orderMenuArr)) {
     throw new Error(ERROR_MESSAGE.ORDER_ONLY_DRINK);
   }
