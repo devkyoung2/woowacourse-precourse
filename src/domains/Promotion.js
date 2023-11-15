@@ -1,8 +1,41 @@
 import Menu from './Menu.js';
 
+const SPECIAL_DATE = [3, 10, 17, 24, 25, 31];
+Object.freeze(SPECIAL_DATE);
+
+const DISCOUNT_AMOUNT = 2023;
+const WEEKDAY_DISCOUNT = DISCOUNT_AMOUNT;
+const WEEKEND_DISCOUNT = DISCOUNT_AMOUNT;
+
+const SPECIAL_DISCOUNT = 1000;
+
+const GIVEWAY = '샴페인 1개';
+const GIVEWAY_PRICE = 25000;
+const REQUIRED_AMOUNT_FOR_GIVEWAY = 120000;
+
+const EVENT_BADGE_SANTA = '산타';
+const EVENT_BADGE_TREE = '트리';
+const EVENT_BADGE_STAR = '별';
+
+const REQUIRED_AMOUNT_FOR_SANTA_BADGE = 20000;
+const REQUIRED_AMOUNT_FOR_TREE_BADGE = 10000;
+const REQUIRED_AMOUNT_FOR_STAR_BADGE = 5000;
+
+function isWeekend(date) {
+  return date % 7 === 1 || date % 7 === 2;
+}
+
+function isSpecialDay(date) {
+  return SPECIAL_DATE.includes(date);
+}
+
 class Promotion {
   static isApply(totalPayment) {
     return totalPayment > 10000;
+  }
+
+  static getGiveway(totalPayment) {
+    return totalPayment > REQUIRED_AMOUNT_FOR_GIVEWAY && GIVEWAY;
   }
 
   static christmasDiscount(date) {
@@ -20,7 +53,7 @@ class Promotion {
 
     orderArr.forEach((item) => {
       if (Menu.isDessert(item.name)) {
-        discount += item.count * 2023;
+        discount += item.count * WEEKDAY_DISCOUNT;
       }
     });
 
@@ -36,7 +69,7 @@ class Promotion {
 
     orderArr.forEach((item) => {
       if (Menu.isMain(item.name)) {
-        discount += item.count * 2023;
+        discount += item.count * WEEKEND_DISCOUNT;
       }
     });
 
@@ -44,34 +77,29 @@ class Promotion {
   }
 
   static specialDate(date) {
-    return isSpecialDay(date) && { type: '특별 할인', discount: 1000 };
+    return (
+      isSpecialDay(date) && { type: '특별 할인', discount: SPECIAL_DISCOUNT }
+    );
   }
 
   static giveaway(payment) {
-    return payment > 120000 ? { type: '증정 이벤트', discount: 25000 } : false;
+    return payment > REQUIRED_AMOUNT_FOR_GIVEWAY
+      ? { type: '증정 이벤트', discount: GIVEWAY_PRICE }
+      : false;
   }
 
   static EventBadge(promotionAmount) {
-    if (promotionAmount > 20000) {
-      return '산타';
+    if (promotionAmount > REQUIRED_AMOUNT_FOR_SANTA_BADGE) {
+      return EVENT_BADGE_SANTA;
     }
-    if (promotionAmount > 10000) {
-      return '트리';
+    if (promotionAmount > REQUIRED_AMOUNT_FOR_TREE_BADGE) {
+      return EVENT_BADGE_TREE;
     }
-    if (promotionAmount > 5000) {
-      return '별';
+    if (promotionAmount > REQUIRED_AMOUNT_FOR_STAR_BADGE) {
+      return EVENT_BADGE_STAR;
     }
-    return '없음';
+    return false;
   }
 }
 
-const specialDate = [3, 10, 17, 24, 25, 31];
-
-function isWeekend(date) {
-  return date % 7 === 1 || date % 7 === 2;
-}
-
-function isSpecialDay(date) {
-  return specialDate.includes(date);
-}
 export default Promotion;

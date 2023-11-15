@@ -1,5 +1,11 @@
 import { Console } from '@woowacourse/mission-utils';
-import { DEFAULT_OUTPUT, CURRENT_MONTH } from '../constants/message.js';
+
+const CURRENT_MONTH = '12';
+const DEFAULT_OUTPUT = '없음';
+
+function formatMoney(moneyStr) {
+  return moneyStr.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
 
 const OutputView = {
   printWecome() {
@@ -65,9 +71,5 @@ const OutputView = {
     Console.print(`${badge || DEFAULT_OUTPUT}`);
   },
 };
-
-function formatMoney(moneyStr) {
-  return moneyStr.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
 
 export default OutputView;
