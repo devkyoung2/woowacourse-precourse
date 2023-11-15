@@ -2,7 +2,57 @@
 
 ## 🗂️ 프로그램 구조
 
-// 추후 작성
+```
+src
+ ├─ constants
+ │  └─ message.js
+ ├─ data
+ │  └─ menu.js
+ ├─ domains
+ │  ├─ Menu.js
+ │  ├─ Order.js
+ │  ├─ Promotion.js
+ │  └─ User.js
+ ├─ utils
+ │   └─ validate.js
+ ├─ view
+ │   ├─ Inputview.js
+ │   └─ Outputview.js
+ ├─ App.js
+ └─ index.js
+
+```
+
+#### constants
+
+- message.js : 에러 메세지를 저장한 파일
+
+#### data
+
+- menu.js : 메뉴를 객체화 한 파일
+
+#### domains
+
+- Menu.js : 각 메뉴의 이름과 가격에 대한 행동을 가지는 메뉴 정적 클래스
+- Order.js : 주문상태와 방문 날짜를 상태로 가져 주문내역의 계산을 담당하는 도메인 로직
+- Promotion.js : 각 이벤트를 만족하는지와 프로모션를 통해 얻은 이익을 계산하는 도메인 로직
+- User.js : 프로모션과 메뉴를 참고하여 주문을 수행하는 사용자 모델
+
+#### utils
+
+- validate.js : 입출력시 타입 유효성을 검증해주는 함수를 모아놓은 파일
+
+#### view
+
+- InputView.js : 입력 뷰. 입력된 값을 검증한다.
+- OutputView.js : 출력 뷰.
+
+#### App.js/index.js
+
+- 프로그램의 진입점
+- App.play() 메서드를 사용해 시작
+
+<br/>
 
 ## 구현할 기능 목록
 
@@ -72,14 +122,14 @@
 - [x] `package.json`을 변경할 수 없고 외부 라이브러리(jQuery, Lodash 등)를 사용하지 않는다. 순수 Vanilla JS로만 구현한다.
 - [x] [JavaScript 코드 컨벤션](https://github.com/woowacourse/woowacourse-docs/tree/main/styleguide/javascript)을 지키면서 프로그래밍 한다
 - [x] 프로그램 종료 시 `process.exit()`를 호출하지 않는다.
-- [] 프로그램 구현이 완료되면 `ApplicationTest`의 모든 테스트가 성공해야 한다. **테스트가 실패할 경우 0점 처리한다.**
+- [x] 프로그램 구현이 완료되면 `ApplicationTest`의 모든 테스트가 성공해야 한다. **테스트가 실패할 경우 0점 처리한다.**
 - [x] 프로그래밍 요구 사항에서 달리 명시하지 않는 한 파일, 패키지 이름을 수정하거나 이동하지 않는다.
-- [] indent(인덴트, 들여쓰기) depth를 3이 넘지 않도록 구현한다. 2까지만 허용한다.
-- [] Jest를 이용하여 본인이 정리한 기능 목록이 정상 동작함을 테스트 코드로 확인한다.
-- [] 함수(또는 메서드)의 길이가 15라인을 넘어가지 않도록 구현한다.
+- [x] indent(인덴트, 들여쓰기) depth를 3이 넘지 않도록 구현한다. 2까지만 허용한다.
+- [x] Jest를 이용하여 본인이 정리한 기능 목록이 정상 동작함을 테스트 코드로 확인한다.
+- [x] 함수(또는 메서드)의 길이가 15라인을 넘어가지 않도록 구현한다.
 - [x] else를 지양한다.
-- [] 도메인 로직에 단위 테스트를 구현해야 한다. 단, UI(Console.readLineAsync, Console.print) 로직에 대한 단위 테스트는 제외한다.
-- [] 사용자가 잘못된 값을 입력할 경우 `throw`문을 사용해 예외를 발생시킨다. 그런 다음, "[ERROR]"로 시작하는 에러 메시지를 출력하고 해당 부분부터 입력을 다시 받는다.
+- [x] 도메인 로직에 단위 테스트를 구현해야 한다. 단, UI(Console.readLineAsync, Console.print) 로직에 대한 단위 테스트는 제외한다.
+- [x] 사용자가 잘못된 값을 입력할 경우 `throw`문을 사용해 예외를 발생시킨다. 그런 다음, "[ERROR]"로 시작하는 에러 메시지를 출력하고 해당 부분부터 입력을 다시 받는다.
 - [x] 제공되는 `InputView`, `OutputView` 객체를 활용해 구현한다.
 - [x] `@woowacourse/mission-utils`에서 제공하는 `Console` API를 사용하여 구현해야 한다.
 - [x] 사용자의 값을 입력 받고 출력하기 위해서는 `Console.readLineAsync`, `Console.print`를 활용한다.
