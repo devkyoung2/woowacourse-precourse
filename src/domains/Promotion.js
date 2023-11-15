@@ -38,6 +38,18 @@ class Promotion {
     return totalPayment > REQUIRED_AMOUNT_FOR_GIVEWAY && GIVEWAY;
   }
 
+  static getPromotionDetailsAll(date, orderArr, totalPayment) {
+    const promotionDetails = [];
+
+    promotionDetails.push(Promotion.christmasDiscount(date));
+    promotionDetails.push(Promotion.weekdayDessert(date, orderArr));
+    promotionDetails.push(Promotion.weekendMain(date, orderArr));
+    promotionDetails.push(Promotion.specialDate(date));
+    promotionDetails.push(Promotion.giveaway(totalPayment));
+
+    return promotionDetails;
+  }
+
   static christmasDiscount(date) {
     const discount = (date - 1) * 100 + 1000;
 

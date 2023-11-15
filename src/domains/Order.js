@@ -4,76 +4,85 @@ import Promotion from './Promotion.js';
 class Order {
   #orderMenu;
   #date;
-  #applyPromotion;
-  #totalPayment = [];
-  #totalPromotion = [];
+
+  #totalPayment = 0;
+  #totalDiscount = [];
 
   setDate(date) {
     this.#date = date;
   }
-  setOrder(order) {
-    this.#orderMenu = order;
-    this.#totalPayment = this.caculateOrder();
-    this.#applyPromotion = Promotion.isApply(this.#totalPayment);
+
+  setOrderMenu(orderMenu) {
+    this.#orderMenu = orderMenu;
+  }
+
+  getVisitDate() {
+    return this.#date;
   }
 
   getOrderMenu() {
     return this.#orderMenu;
   }
 
-  // 계산
-  caculateOrder() {
+  getPaymentBeforeDiscount() {
     let totalPayment = 0;
 
     this.#orderMenu.forEach((item) => {
       totalPayment += item.count * Menu.getPrice(item.name);
     });
 
+    this.#totalPayment = totalPayment;
+
     return totalPayment;
   }
 
-  // 증정 메뉴
   getGiveaway() {
-    return this.#applyPromotion && Promotion.giveaway(this.#totalPayment);
+    if (!Promotion.isApply(this.#totalPayment)) return false;
+
+    return Promotion.getGiveway(this.#totalPayment);
   }
 
-  // 혜택 내역
   getPromotionDetails() {
-    if (!this.#applyPromotion) return false;
+    if (!Promotion.isApply(this.#totalPayment)) return false;
 
-    const promotionDetails = [];
-    promotionDetails.push(Promotion.christmasDiscount(this.#date));
-    promotionDetails.push(
-      Promotion.weekdayDessert(this.#date, this.#orderMenu)
+    const promotionDetails = Promotion.getPromotionDetailsAll(
+      this.#date,
+      this.#orderMenu,
+      this.#totalPayment
     );
-    promotionDetails.push(Promotion.weekendMain(this.#date, this.#orderMenu));
-    promotionDetails.push(Promotion.specialDate(this.#date, this.#orderMenu));
-    promotionDetails.push(Promotion.giveaway(this.#totalPayment));
 
     const applyPromotionDetails = promotionDetails.filter((item) => item);
 
-    this.#totalPromotion = applyPromotionDetails;
+    if (applyPromotionDetails.length === 0) {
+      return false;
+    }
+
+    this.#totalDiscount = applyPromotionDetails;
+
     return applyPromotionDetails;
   }
 
-  // 총 혜택 금액
   getTotalPromotionAmount() {
-    const totalPromotionAmount = this.#totalPromotion.reduce((acc, cur) => {
+    const totalPromotionAmount = this.#totalDiscount.reduce((acc, cur) => {
       return acc + cur.discount;
     }, 0);
 
     return totalPromotionAmount;
   }
 
-  // 할인 후 예상 결제 금액
   getPaymentAfterDiscount() {
+    if (Promotion.getGiveway(this.#totalPayment)) {
+      return this.#totalPayment - this.getTotalPromotionAmount() + 25000;
+    }
+
     return this.#totalPayment - this.getTotalPromotionAmount();
   }
 
   getEventBadge() {
-    if (!this.#applyPromotion) return false;
+    if (!Promotion.isApply(this.#totalPayment)) return false;
 
-    const badge = Promotion.EventBadge();
+    const badge = Promotion.EventBadge(this.getTotalPromotionAmount());
+
     return badge;
   }
 }
