@@ -18,10 +18,21 @@ class App {
 
   async gameStart() {
     this.#computer = this.generateRandom(3);
-    this.#user = this.guessUser();
-    // this.#computer = ['7', '1', '3'];
+    console.log(this.#computer);
 
-    this.judgeStrikeAndBall(this.#user, this.#computer);
+    while (true) {
+      this.#user = await this.guessUser();
+      const { ball, strike } = this.judgeStrikeAndBall(
+        this.#user,
+        this.#computer
+      );
+      this.printGameResult(ball, strike);
+      console.log(strike, ball);
+      if (this.#computer === this.#user) {
+        OutputView.printEnd();
+        break;
+      }
+    }
   }
 
   generateRandom(digit) {
@@ -33,13 +44,12 @@ class App {
         pickedNumbers += pickedNumber;
       }
     }
-
-    return [...pickedNumbers];
+    return pickedNumbers;
   }
 
   async guessUser() {
     const inputUserGuess = await InputView.readGong();
-    return [...inputUserGuess];
+    return inputUserGuess;
   }
 
   judgeStrikeAndBall(user, computer) {
@@ -53,8 +63,24 @@ class App {
         ball += 1;
       }
     }
-    console.log(strike, ball);
+
     return { ball, strike };
+  }
+
+  printGameResult(ball, strike) {
+    if (ball === 0 && strike === 0) {
+      OutputView.printNothing();
+      return;
+    }
+    if (ball === 0) {
+      OutputView.printStrike(strike);
+      return;
+    }
+    if (strike === 0) {
+      OutputView.printBall(ball);
+      return;
+    }
+    OutputView.printBallAndStrike(ball, strike);
   }
 
   // selectRetry(){}
