@@ -6,13 +6,13 @@ class App {
   #computer;
   #user;
 
-  async play() {
+  play() {
     OutputView.printWelcomeGame();
 
     try {
       this.gameStart();
     } catch (err) {
-      console.log(err.message);
+      OutputView.printError(err.message);
     }
   }
 
@@ -21,18 +21,20 @@ class App {
     console.log(this.#computer);
 
     while (true) {
-      this.#user = await this.guessUser();
-      const { ball, strike } = this.judgeStrikeAndBall(
+      this.#user = await this.inputUserGuess();
+      const { ball, strike } = this.matchStrikeAndBall(
         this.#user,
         this.#computer
       );
+
       this.printGameResult(ball, strike);
-      console.log(strike, ball);
-      if (this.#computer === this.#user) {
+
+      if (this.#user === this.#computer) {
         OutputView.printEnd();
         break;
       }
     }
+
     this.isRetry();
   }
 
@@ -48,15 +50,14 @@ class App {
     return pickedNumbers;
   }
 
-  async guessUser() {
-    const inputUserGuess = await InputView.readGong();
-    return inputUserGuess;
+  async inputUserGuess() {
+    return await InputView.readGong();
   }
 
-  judgeStrikeAndBall(user, computer) {
+  matchStrikeAndBall(user, computer) {
     let strike = 0;
     let ball = 0;
-    console.log(computer, user);
+
     for (let i = 0; i < 3; i++) {
       if (computer[i] === user[i]) {
         strike += 1;
@@ -86,6 +87,7 @@ class App {
 
   async isRetry() {
     const selectedReTry = await InputView.reStart();
+
     if (Number(selectedReTry) === 1) {
       return this.gameStart();
     }
