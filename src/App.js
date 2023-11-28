@@ -43,6 +43,8 @@ class App {
     let strike = 0;
     let ball = 0;
   }
+
+  // selectRetry(){}
 }
 
 const app = new App();
