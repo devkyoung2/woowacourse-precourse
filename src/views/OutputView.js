@@ -20,7 +20,7 @@ const OutputView = {
     Console.print(`${ball}볼 ${strike}스트라이크`);
   },
   printError(error) {
-    console.log(error);
+    console.log(error.message);
   },
 };
 

@@ -5,6 +5,18 @@ const InputView = {
     const input = await Console.readLineAsync('숫자를 입력해주세요 : ');
     this.isValidate(input);
 
+    if (isNaN(input)) {
+      throw new Error('[Error] : 숫자가 아닙니다.');
+    }
+    const numberInput = Number(input);
+    if (parseInt(numberInput) !== numberInput) {
+      throw new Error('[Error] : 자연수를 입력하세요.');
+    }
+
+    if (input.length !== 3) {
+      throw new Error('[Error] : 3자리 수를 입력하세요');
+    }
+
     return input;
   },
 
@@ -13,6 +25,14 @@ const InputView = {
       '게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.\n'
     );
     this.isValidate(input);
+
+    if (isNaN(input)) {
+      throw new Error('[Error] : 숫자가 아닙니다.');
+    }
+
+    if (!['1', '2'].includes(input)) {
+      throw new Error('[Error] : 1 또는 2를 입력하세요');
+    }
 
     return input;
   },

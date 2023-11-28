@@ -6,13 +6,13 @@ class App {
   #computer;
   #user;
 
-  play() {
+  async play() {
     OutputView.printWelcomeGame();
 
     try {
-      this.gameStart();
+      await this.gameStart();
     } catch (err) {
-      OutputView.printError(err.message);
+      OutputView.printError(err);
     }
   }
 
@@ -35,7 +35,7 @@ class App {
       }
     }
 
-    this.isRetry();
+    await this.isRetry();
   }
 
   generateRandom(digit) {
