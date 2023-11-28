@@ -33,6 +33,7 @@ class App {
         break;
       }
     }
+    this.isRetry();
   }
 
   generateRandom(digit) {
@@ -83,7 +84,12 @@ class App {
     OutputView.printBallAndStrike(ball, strike);
   }
 
-  // selectRetry(){}
+  async isRetry() {
+    const selectedReTry = await InputView.reStart();
+    if (Number(selectedReTry) === 1) {
+      return this.gameStart();
+    }
+  }
 }
 
 const app = new App();

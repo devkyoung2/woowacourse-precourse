@@ -19,7 +19,6 @@ const OutputView = {
   printBallAndStrike(ball, strike) {
     Console.print(`${ball}볼 ${strike}스트라이크`);
   },
-  // ...
 };
 
 export default OutputView;
