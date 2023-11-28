@@ -17,6 +17,11 @@ const InputView = {
       throw new Error('[Error] : 3자리 수를 입력하세요');
     }
 
+    const setInput = new Set(input);
+    if (setInput.size !== 3) {
+      throw new Error('[Error] : 서로 다른 3자리 수를 입력하세요');
+    }
+
     return input;
   },
 
