@@ -20,10 +20,13 @@ class App {
       this.#attempts = validatedAttempts;
     } catch (err) {
       console.log(err.message);
-      return;
+      throw err;
+      // return;
     }
     OutputView.printResultMessage();
     this.raceStart(this.#cars, this.#attempts);
+    const winners = this.findWinner(this.#cars);
+    OutputView.printWinner(winners);
   }
 
   raceStart(cars, attempts) {
@@ -35,10 +38,23 @@ class App {
 
   round(cars) {
     for (const car of cars) {
-      if (Random.pickNumberInRange(0, 9) > 4) {
+      if (Random.pickNumberInRange(0, 9) >= 4) {
         car.position += 1;
       }
     }
+  }
+
+  findWinner(cars) {
+    let maxPosition = 0;
+
+    cars.forEach((car) => {
+      if (car.position > maxPosition) {
+        maxPosition = car.position;
+      }
+    });
+
+    const winnerCar = cars.filter((item) => item.position === maxPosition);
+    return winnerCar.map((item) => item.name);
   }
 
   #validateCars(cars) {
@@ -49,7 +65,7 @@ class App {
       const trimmedCarName = car.trim();
 
       if (trimmedCarName.length > 5) {
-        throw new Error('5글자 이상의 이름');
+        throw new Error('[ERROR] : 5글자 이상의 이름');
       }
       validatedCars.push({ name: trimmedCarName, position: 0 });
     }
@@ -60,13 +76,13 @@ class App {
   #validateAttempts(attempts) {
     const attemptsNumber = Number(attempts);
     if (!attemptsNumber) {
-      throw new Error('문자 값');
+      throw new Error('[ERROR] : 문자 값');
     }
     if (Math.floor(attemptsNumber) !== attemptsNumber) {
-      throw new Error('실수 값');
+      throw new Error('[ERROR] : 실수 값');
     }
     if (attemptsNumber < 1) {
-      throw new Error('1 이하의 값');
+      throw new Error('[ERROR] : 1 이하의 값');
     }
 
     return attemptsNumber;
