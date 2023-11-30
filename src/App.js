@@ -2,10 +2,17 @@ import InputView from './views/InputView.js';
 import OutputView from './views/OutputView.js';
 
 class App {
+  #race;
+
   async play() {
     try {
       const { cars, attempts } = this.InputUser();
-    } catch (err) {}
+      this.#race = new Race(cars, attempts);
+    } catch (err) {
+      console.log(err.message);
+    }
+
+    this.#race.start();
   }
 
   async InputUser() {
