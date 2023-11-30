@@ -38,7 +38,18 @@ class App {
     return splitedCars;
   }
 
-  #validateAttempts(attempts) {}
+  #validateAttempts(attempts) {
+    const attemptsNumber = Number(attempts);
+    if (!attemptsNumber) {
+      throw new Error('문자 값');
+    }
+    if (Math.floor(attemptsNumber) !== attemptsNumber) {
+      throw new Error('실수 값');
+    }
+    if (attemptsNumber < 1) {
+      throw new Error('1 이하의 값');
+    }
+  }
 }
 
 const app = new App();
