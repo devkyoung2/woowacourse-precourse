@@ -3,11 +3,16 @@ import OutputView from './views/OutputView.js';
 
 class App {
   async play() {
-    this.InputUser();
+    try {
+      const { cars, attempts } = this.InputUser();
+    } catch (err) {}
   }
 
   async InputUser() {
-    const racers = await InputView.readDate();
+    const cars = await InputView.readCars();
+    const attempts = await InputView.readAttempts();
+
+    return { cars, attempts };
   }
 }
 
