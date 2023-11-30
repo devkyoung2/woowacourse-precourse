@@ -22,14 +22,15 @@ class App {
       console.log(err.message);
       return;
     }
+    OutputView.printResultMessage();
     this.raceStart(this.#cars, this.#attempts);
   }
 
   raceStart(cars, attempts) {
-    for (let i = 0; i <= attempts; i++) {
+    for (let i = 0; i < attempts; i++) {
       this.round(cars);
+      OutputView.printRaceResult(cars);
     }
-    console.log(this.#cars);
   }
 
   round(cars) {
