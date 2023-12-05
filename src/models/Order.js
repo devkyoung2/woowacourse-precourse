@@ -91,7 +91,7 @@ export default class Order {
       }
     }
 
-    throw new Error('[ERROR] 음료만 주문할 수 없습니다. 다시 입력해 주세요.');
+    throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
   }
 
   // Todo : 역할 분리
