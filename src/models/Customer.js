@@ -1,9 +1,11 @@
 import Order from './Order.js';
+import Badge from './Badge.js';
 
 export default class Customer {
   #targetmonth;
   #visitDate;
   #order;
+  #badge = new Badge();
 
   constructor(visitDate, targetMonth) {
     const validatedDate = this.#validateVisitDate(visitDate);
@@ -11,6 +13,10 @@ export default class Customer {
     this.#visitDate = validatedDate;
   }
 
+  getBadge() {
+    const totalDiscount = this.getTotalPromotion();
+    return this.#badge.getBadge(totalDiscount);
+  }
   getTotalPromotion() {
     return this.#order.getTotalPromotion();
   }
@@ -21,12 +27,18 @@ export default class Customer {
   getGiveawayItems() {
     return this.#order.getGiveawayItems();
   }
+
   order(items) {
     this.#order = new Order(items, this.#visitDate, this.#targetmonth);
   }
 
   getTotalOrderPriceAfterDiscount() {
-    return this.getTotalOrderPriceBeforeDiscount() - this.getTotalPromotion();
+    if (this.#order.getGiveawayItems === '없음') {
+      return this.getTotalOrderPriceBeforeDiscount() - this.getTotalPromotion();
+    }
+    return (
+      this.getTotalOrderPriceBeforeDiscount() - this.getTotalPromotion() + 25000
+    );
   }
 
   getTotalOrderPriceBeforeDiscount() {

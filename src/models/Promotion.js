@@ -31,7 +31,7 @@ export default class Promotion {
     if (type === '평일 할인') return this.#weekday(visitDate, orderLog);
     if (type === '주말 할인') return this.#weekend(visitDate, orderLog);
     if (type === '특별 할인') return this.#special(visitDate, orderLog);
-    if (type === '증정 이벤트') return this.#giveaway(totalOrderPrice);
+    if (type === '증정 이벤트') return this.giveaway(totalOrderPrice);
   }
 
   #christmas(visitDate) {
@@ -73,7 +73,7 @@ export default class Promotion {
     return false;
   }
 
-  #giveaway(totalOrderPrice) {
+  giveaway(totalOrderPrice) {
     return this.getGiveawayItems(totalOrderPrice) === '없음' ? false : 25000;
   }
 }

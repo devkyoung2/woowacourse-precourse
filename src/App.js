@@ -23,6 +23,11 @@ class App {
     this.#printPromotionLog();
     this.#printTotalPromotion();
     this.#printTotalOrderPriceAfterDiscount();
+    this.#printBadge();
+  }
+  #printBadge() {
+    const badge = this.#customer.getBadge();
+    OutputView.printBadge(this.#targetMonth, badge);
   }
 
   #printTotalOrderPriceAfterDiscount() {

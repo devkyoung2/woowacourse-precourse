@@ -51,9 +51,13 @@ const OutputView = {
     Console.print(`-${totalPromotion}원`);
   },
 
-  ㅊ(price) {
+  printTotalOrderPriceAfterDiscount(price) {
     Console.print(`\n<할인 후 예상 결제 금액>`);
     Console.print(`${price}원`);
+  },
+  printBadge(month, badge) {
+    Console.print(`\n<${month}월 이벤트 배지>`);
+    Console.print(badge);
   },
 };
 export default OutputView;
