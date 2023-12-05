@@ -13,6 +13,10 @@ export default class Order {
     this.#visitDate = visitDate;
     this.#bill = new Bill(this.#orderLog, this.#visitDate, targetMonth);
   }
+
+  getTotalPromotion() {
+    return this.#bill.getTotalPromotion();
+  }
   getPrmotionLog() {
     return this.#bill.getPrmotionLog();
   }

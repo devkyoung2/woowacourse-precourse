@@ -11,6 +11,10 @@ export default class Customer {
     this.#visitDate = validatedDate;
   }
 
+  getTotalPromotion() {
+    return this.#order.getTotalPromotion();
+  }
+
   getPrmotionLog() {
     return this.#order.getPrmotionLog();
   }

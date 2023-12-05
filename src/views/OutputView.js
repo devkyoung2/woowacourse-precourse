@@ -45,5 +45,10 @@ const OutputView = {
       }
     }
   },
+
+  printTotalPromotion(totalPromotion) {
+    Console.print('\n<총혜택 금액>');
+    Console.print(`-${totalPromotion}원`);
+  },
 };
 export default OutputView;

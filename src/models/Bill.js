@@ -14,6 +14,14 @@ export default class Bill {
     this.#promotion = new Promotion(totalOrderPrice);
   }
 
+  getTotalPromotion() {
+    const promotionLog = this.getPrmotionLog();
+
+    return Object.values(promotionLog)
+      .filter((price) => price)
+      .reduce((pre, cur) => pre + cur, 0);
+  }
+
   getPrmotionLog() {
     const promotionCategory = this.#promotion.getPromotionCategory();
     const promotionLog = {};
