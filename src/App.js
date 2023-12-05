@@ -22,6 +22,12 @@ class App {
     this.#printGiveawayItems();
     this.#printPromotionLog();
     this.#printTotalPromotion();
+    this.#printTotalOrderPriceAfterDiscount();
+  }
+
+  #printTotalOrderPriceAfterDiscount() {
+    const price = this.#customer.getTotalOrderPriceAfterDiscount();
+    OutputView.printTotalOrderPriceAfterDiscount(price);
   }
 
   #printTotalPromotion() {

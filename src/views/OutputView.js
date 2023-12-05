@@ -50,5 +50,10 @@ const OutputView = {
     Console.print('\n<총혜택 금액>');
     Console.print(`-${totalPromotion}원`);
   },
+
+  ㅊ(price) {
+    Console.print(`\n<할인 후 예상 결제 금액>`);
+    Console.print(`${price}원`);
+  },
 };
 export default OutputView;

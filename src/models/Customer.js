@@ -25,6 +25,10 @@ export default class Customer {
     this.#order = new Order(items, this.#visitDate, this.#targetmonth);
   }
 
+  getTotalOrderPriceAfterDiscount() {
+    return this.getTotalOrderPriceBeforeDiscount() - this.getTotalPromotion();
+  }
+
   getTotalOrderPriceBeforeDiscount() {
     return this.#order.getTotalOrderPriceBeforeDiscount();
   }
