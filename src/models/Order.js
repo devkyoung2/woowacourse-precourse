@@ -8,6 +8,9 @@ export default class Order {
     this.#orderLog = validedOrder;
   }
 
+  getOrderLog() {
+    return this.#orderLog;
+  }
   #getValidateOrder(items) {
     const orderItems = this.#getValidOrderFormat(items);
     this.#checkHasInMenu(orderItems);

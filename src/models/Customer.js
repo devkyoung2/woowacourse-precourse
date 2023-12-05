@@ -13,6 +13,13 @@ export default class Customer {
     this.#order = new Order(items);
   }
 
+  getOrderItems() {
+    return this.#order.getOrderLog();
+  }
+  getVisitDate() {
+    return this.#visitDate;
+  }
+
   #validateVisitDate(visitDate) {
     // 숫자인지
     if (isNaN(visitDate)) {
