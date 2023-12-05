@@ -9,7 +9,29 @@ export default class Bill {
   constructor(orderLog, visitDate) {
     this.#orderLog = orderLog;
     this.#visitDate = visitDate;
-    this.#promotion = new Promotion(this.#orderLog, this.#visitDate);
+
+    const totalOrderPrice = this.getTotalOrderPriceBeforeDiscount();
+    this.#promotion = new Promotion(totalOrderPrice);
+  }
+
+  getPrmotionLog() {
+    const promotionCategory = this.#promotion.getPromotionCategory();
+    const promotionLog = {};
+    if (!this.#promotion.isApplyPromotion) {
+      return false;
+    }
+
+    promotionCategory.forEach((protmotion) => {
+      const profit = this.#promotion.isGetThisPromotion(
+        protmotion,
+        this.#visitDate,
+        this.#orderLog,
+        this.getTotalOrderPriceBeforeDiscount()
+      );
+      promotionLog[protmotion] = profit;
+    });
+
+    return promotionLog;
   }
 
   getGiveawayItems() {
@@ -23,7 +45,7 @@ export default class Bill {
     let orderPrice = 0;
 
     for (const [orderItem, amount] of Object.entries(this.#orderLog)) {
-      const a = menuItems.forEach((item) => {
+      menuItems.forEach((item) => {
         if (item.name === orderItem) {
           orderPrice += item.price * amount;
         }

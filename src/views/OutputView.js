@@ -33,5 +33,17 @@ const OutputView = {
     Console.print('\n<증정 메뉴>');
     Console.print(giveaway);
   },
+
+  printPromotionLog(promotionLog) {
+    Console.print('\n<혜택 내역>');
+    if (!promotionLog) {
+      Console.print(`없음`);
+    }
+    for (const [type, price] of Object.entries(promotionLog)) {
+      if (price !== false) {
+        Console.print(`${type} : -${price}`);
+      }
+    }
+  },
 };
 export default OutputView;

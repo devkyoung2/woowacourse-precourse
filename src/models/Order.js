@@ -13,6 +13,9 @@ export default class Order {
     this.#visitDate = visitDate;
     this.#bill = new Bill(this.#orderLog, this.#visitDate, targetMonth);
   }
+  getPrmotionLog() {
+    return this.#bill.getPrmotionLog();
+  }
 
   getGiveawayItems() {
     return this.#bill.getGiveawayItems();

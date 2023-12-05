@@ -6,11 +6,14 @@ export default class Customer {
   #order;
 
   constructor(visitDate, targetMonth) {
-    this.#validateVisitDate(visitDate);
+    const validatedDate = this.#validateVisitDate(visitDate);
     this.#targetmonth = targetMonth;
-    this.#visitDate = visitDate;
+    this.#visitDate = validatedDate;
   }
 
+  getPrmotionLog() {
+    return this.#order.getPrmotionLog();
+  }
   getGiveawayItems() {
     return this.#order.getGiveawayItems();
   }
@@ -49,5 +52,6 @@ export default class Customer {
         '[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.\n'
       );
     }
+    return Number(visitDate);
   }
 }

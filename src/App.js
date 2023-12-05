@@ -20,6 +20,12 @@ class App {
     this.#printMenu(orderItmes);
     this.#printTotalOrderPriceBeforeDiscount();
     this.#printGiveawayItems();
+    this.#printPromotionLog();
+  }
+
+  #printPromotionLog() {
+    const promotionLog = this.#customer.getPrmotionLog();
+    OutputView.printPromotionLog(promotionLog);
   }
 
   #printGiveawayItems() {
