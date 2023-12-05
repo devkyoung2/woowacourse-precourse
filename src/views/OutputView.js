@@ -1,5 +1,10 @@
 import { Console } from '@woowacourse/mission-utils';
 
+function formatMoney(money) {
+  const moneyStr = money.toString();
+  return moneyStr.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
 const OutputView = {
   printError(error) {
     Console.print(error);
@@ -26,7 +31,7 @@ const OutputView = {
 
   printTotalOrderPriceBeforeDiscount(price) {
     Console.print(`\n<할인 전 총주문 금액>`);
-    Console.print(`${price}원`);
+    Console.print(`${formatMoney(price)}원`);
   },
 
   printGiveawayItems(giveaway) {
@@ -41,20 +46,21 @@ const OutputView = {
     }
     for (const [type, price] of Object.entries(promotionLog)) {
       if (price !== false) {
-        Console.print(`${type} : -${price}`);
+        Console.print(`${type} : -${formatMoney(price)}원`);
       }
     }
   },
 
   printTotalPromotion(totalPromotion) {
     Console.print('\n<총혜택 금액>');
-    Console.print(`-${totalPromotion}원`);
+    Console.print(`-${formatMoney(totalPromotion)}원`);
   },
 
   printTotalOrderPriceAfterDiscount(price) {
     Console.print(`\n<할인 후 예상 결제 금액>`);
-    Console.print(`${price}원`);
+    Console.print(`${formatMoney(price)}원`);
   },
+
   printBadge(month, badge) {
     Console.print(`\n<${month}월 이벤트 배지>`);
     Console.print(badge);
