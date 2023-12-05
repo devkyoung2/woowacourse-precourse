@@ -1,16 +1,21 @@
 import Order from './Order.js';
 
 export default class Customer {
+  #targetmonth;
   #visitDate;
   #order;
 
-  constructor(visitDate) {
+  constructor(visitDate, targetMonth) {
     this.#validateVisitDate(visitDate);
+    this.#targetmonth = targetMonth;
     this.#visitDate = visitDate;
   }
 
+  getGiveawayItems() {
+    return this.#order.getGiveawayItems();
+  }
   order(items) {
-    this.#order = new Order(items, this.#visitDate);
+    this.#order = new Order(items, this.#visitDate, this.#targetmonth);
   }
 
   getTotalOrderPriceBeforeDiscount() {

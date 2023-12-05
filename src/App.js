@@ -19,6 +19,12 @@ class App {
     OutputView.printEventPlannerMessage(this.#targetMonth, visitDate);
     this.#printMenu(orderItmes);
     this.#printTotalOrderPriceBeforeDiscount();
+    this.#printGiveawayItems();
+  }
+
+  #printGiveawayItems() {
+    const isGetGiveawayItems = this.#customer.getGiveawayItems();
+    OutputView.printGiveawayItems(isGetGiveawayItems);
   }
 
   #printMenu(orderItmes) {
@@ -33,7 +39,7 @@ class App {
   async #readDate() {
     try {
       const visitDate = await InputView.readDate();
-      this.#customer = new Customer(visitDate);
+      this.#customer = new Customer(visitDate, this.#targetMonth);
     } catch (error) {
       OutputView.printError(error.message);
       return this.#readDate();

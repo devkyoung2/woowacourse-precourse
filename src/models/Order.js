@@ -7,13 +7,16 @@ export default class Order {
   #orderLog;
   #visitDate;
 
-  constructor(items, visitDate) {
+  constructor(items, visitDate, targetMonth) {
     const validedOrder = this.#getValidateOrder(items);
     this.#orderLog = validedOrder;
     this.#visitDate = visitDate;
-    this.#bill = new Bill(this.#orderLog, this.#visitDate);
+    this.#bill = new Bill(this.#orderLog, this.#visitDate, targetMonth);
   }
 
+  getGiveawayItems() {
+    return this.#bill.getGiveawayItems();
+  }
   getTotalOrderPriceBeforeDiscount() {
     return this.#bill.getTotalOrderPriceBeforeDiscount();
   }

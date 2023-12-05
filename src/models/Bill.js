@@ -1,4 +1,5 @@
 import Menu from '../data/Menu.js';
+import Promotion from './Promotion.js';
 
 export default class Bill {
   #orderLog; // { '해산물파스타': 2, '레드와인': 1, '초코케이크': 1 }
@@ -8,6 +9,13 @@ export default class Bill {
   constructor(orderLog, visitDate) {
     this.#orderLog = orderLog;
     this.#visitDate = visitDate;
+    this.#promotion = new Promotion(this.#orderLog, this.#visitDate);
+  }
+
+  getGiveawayItems() {
+    const totalOrderPrice = this.getTotalOrderPriceBeforeDiscount();
+
+    return this.#promotion.getGiveawayItems(totalOrderPrice);
   }
 
   getTotalOrderPriceBeforeDiscount() {
