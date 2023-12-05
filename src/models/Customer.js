@@ -1,4 +1,5 @@
 import Order from './Order.js';
+
 export default class Customer {
   #visitDate;
   #order;
@@ -11,6 +12,7 @@ export default class Customer {
   order(items) {
     this.#order = new Order(items);
   }
+
   #validateVisitDate(visitDate) {
     // 숫자인지
     if (isNaN(visitDate)) {
