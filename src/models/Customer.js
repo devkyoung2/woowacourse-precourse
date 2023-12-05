@@ -10,7 +10,11 @@ export default class Customer {
   }
 
   order(items) {
-    this.#order = new Order(items);
+    this.#order = new Order(items, this.#visitDate);
+  }
+
+  getTotalOrderPriceBeforeDiscount() {
+    return this.#order.getTotalOrderPriceBeforeDiscount();
   }
 
   getOrderItems() {

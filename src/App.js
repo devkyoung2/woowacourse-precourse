@@ -18,10 +18,16 @@ class App {
   #printEventPlanner(orderItmes, visitDate) {
     OutputView.printEventPlannerMessage(this.#targetMonth, visitDate);
     this.#printMenu(orderItmes);
+    this.#printTotalOrderPriceBeforeDiscount();
   }
 
   #printMenu(orderItmes) {
     OutputView.printMenu(orderItmes);
+  }
+
+  #printTotalOrderPriceBeforeDiscount() {
+    const price = this.#customer.getTotalOrderPriceBeforeDiscount();
+    OutputView.printTotalOrderPriceBeforeDiscount(price);
   }
 
   async #readDate() {

@@ -23,5 +23,10 @@ const OutputView = {
       Console.print(`${name} ${amount}개`);
     }
   },
+
+  printTotalOrderPriceBeforeDiscount(price) {
+    Console.print(`\n<할인 전 총주문 금액>`);
+    Console.print(`${price}원`);
+  },
 };
 export default OutputView;

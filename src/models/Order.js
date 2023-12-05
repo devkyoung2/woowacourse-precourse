@@ -1,16 +1,27 @@
 import Menu from './../data/Menu.js';
+import Bill from './Bill.js';
 
+// 주문에 대해 확인
 export default class Order {
+  #bill;
   #orderLog;
+  #visitDate;
 
-  constructor(items) {
+  constructor(items, visitDate) {
     const validedOrder = this.#getValidateOrder(items);
     this.#orderLog = validedOrder;
+    this.#visitDate = visitDate;
+    this.#bill = new Bill(this.#orderLog, this.#visitDate);
+  }
+
+  getTotalOrderPriceBeforeDiscount() {
+    return this.#bill.getTotalOrderPriceBeforeDiscount();
   }
 
   getOrderLog() {
     return this.#orderLog;
   }
+
   #getValidateOrder(items) {
     const orderItems = this.#getValidOrderFormat(items);
     this.#checkHasInMenu(orderItems);
