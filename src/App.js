@@ -7,6 +7,7 @@ class App {
   async run() {
     OutputView.printWelcomeMessage();
     await this.#readDate();
+    await this.#readOrder();
   }
 
   async #readDate() {
@@ -16,6 +17,16 @@ class App {
     } catch (error) {
       OutputView.printError(error.message);
       return this.#readDate();
+    }
+  }
+
+  async #readOrder() {
+    try {
+      const items = await InputView.readOrder();
+      this.#customer.order(items);
+    } catch (error) {
+      OutputView.printError(error.message);
+      return this.#readOrder();
     }
   }
 }
