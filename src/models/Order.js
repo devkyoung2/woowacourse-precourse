@@ -9,11 +9,11 @@ export default class Order {
   #visitDate;
 
   // ? promotion 객체가 Order에서 생성되는게 맞는지, Bill에서 생성되는게 맞는지 확인
-  constructor(items, visitDate, targetMonth) {
+  constructor(items, visitDate) {
     const validedOrder = this.#getValidateOrder(items);
     this.#orderLog = validedOrder;
     this.#visitDate = visitDate;
-    this.#bill = new Bill(this.#orderLog, this.#visitDate, targetMonth);
+    this.#bill = new Bill(this.#orderLog, this.#visitDate);
   }
 
   #getValidateOrder(items) {
