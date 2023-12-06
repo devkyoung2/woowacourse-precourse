@@ -1,35 +1,19 @@
+// ? 메뉴판에게 위임을 해야하는데 그렇다면 애초에 메뉴판이 class로 제작되는게 맞았는지 확인
 import Menu from './../data/Menu.js';
 import Bill from './Bill.js';
+import { isPositive } from '../utils/isRange.js';
 
-// 주문에 대해 확인
 export default class Order {
   #bill;
   #orderLog;
   #visitDate;
 
+  // ? promotion 객체가 Order에서 생성되는게 맞는지, Bill에서 생성되는게 맞는지 확인
   constructor(items, visitDate, targetMonth) {
     const validedOrder = this.#getValidateOrder(items);
     this.#orderLog = validedOrder;
     this.#visitDate = visitDate;
     this.#bill = new Bill(this.#orderLog, this.#visitDate, targetMonth);
-  }
-
-  getTotalPromotion() {
-    return this.#bill.getTotalPromotion();
-  }
-  getPrmotionLog() {
-    return this.#bill.getPrmotionLog();
-  }
-
-  getGiveawayItems() {
-    return this.#bill.getGiveawayItems();
-  }
-  getTotalOrderPriceBeforeDiscount() {
-    return this.#bill.getTotalOrderPriceBeforeDiscount();
-  }
-
-  getOrderLog() {
-    return this.#orderLog;
   }
 
   #getValidateOrder(items) {
@@ -43,6 +27,9 @@ export default class Order {
   }
 
   // Todo : 역할 분리
+  // Todo : 검증 로직 정리하기
+  // ? getValidOrderFormat 함수명
+  // ? getValidOrderFormat에서 is로 시작해야하는지 get으로 시작해야하는지
   #getValidOrderFormat(items) {
     const splitItems = items.split(',');
     const parsedItems = {};
@@ -50,16 +37,18 @@ export default class Order {
     for (const item of splitItems) {
       const parsedItem = item.split('-');
 
-      if (parsedItem.length != 2) {
+      if (parsedItem.length !== 2) {
         throw new Error(
           '[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.'
         );
       }
+
       if (parsedItems.hasOwnProperty(parsedItem[0])) {
         throw new Error(
           '[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.'
         );
       }
+
       parsedItems[parsedItem[0]] = Number(parsedItem[1]);
     }
 
@@ -86,9 +75,7 @@ export default class Order {
     for (const itemName in orderItems) {
       const beveragesNames = [...Menu.beverages].map((item) => item.name);
 
-      if (!beveragesNames.includes(itemName)) {
-        return;
-      }
+      if (!beveragesNames.includes(itemName)) return;
     }
 
     throw new Error('[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.');
@@ -99,6 +86,7 @@ export default class Order {
     const orderItemsAmount = Object.values(orderItems);
 
     orderItemsAmount.forEach((itemCount) => {
+      // ? isNaN 사용에 대해 고민
       if (isNaN(itemCount)) {
         throw new Error(
           '[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.1'
@@ -109,7 +97,7 @@ export default class Order {
           '[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.2'
         );
       }
-      if (!isRange(itemCount)) {
+      if (!isPositive(itemCount)) {
         throw new Error(
           '[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.3'
         );
@@ -130,10 +118,24 @@ export default class Order {
       );
     }
   }
-}
 
-function isRange(num) {
-  return num > 0;
+  getOrderLog() {
+    return this.#orderLog;
+  }
+
+  getTotalOrderPriceBeforeDiscount() {
+    return this.#bill.getTotalOrderPriceBeforeDiscount();
+  }
+
+  getGiveawayItems() {
+    return this.#bill.getGiveawayItems();
+  }
+
+  getPrmotionLog() {
+    return this.#bill.getPrmotionLog();
+  }
+
+  getTotalPromotion() {
+    return this.#bill.getTotalPromotion();
+  }
 }
-// 메뉴판에게 위임을 해야하는데 그렇다면 애초에 메뉴판이 class로 제작되는게 맞았는지 확인
-// getValidOrderFormat에서 is로 시작해야하는지 get으로 시작해야하는지
