@@ -1,17 +1,26 @@
 import Menu from '../data/Menu.js';
+import {
+  CATEGORY,
+  GIVEAWAY,
+  NONE_PROMOTION,
+  MIN_PRICE_APPLIED_PROMOTION,
+  MIN_PRICE_APPLIED_GIVEAWAY,
+  SPECIAL_DAYS,
+  GIVEAWAY_PRICE,
+} from '../constants/promotion.js';
 
 export default class Promotion {
   isApplyPromotion;
   #category = [
-    '크리스마스 디데이 할인',
-    '평일 할인',
-    '주말 할인',
-    '특별 할인',
-    '증정 이벤트',
+    CATEGORY.CHRISTMAS,
+    CATEGORY.WEEKDAY,
+    CATEGORY.WEEKEND,
+    CATEGORY.SPECIAL,
+    CATEGORY.GIFT_EVENT,
   ];
 
   constructor(totalOrderPrice) {
-    this.isApplyPromotion = totalOrderPrice > 10000;
+    this.isApplyPromotion = this.#isApplyPromotion(totalOrderPrice);
   }
 
   getPromotionCategory() {
@@ -19,22 +28,31 @@ export default class Promotion {
   }
 
   getGiveawayItems(totalOrderPrice) {
-    if (totalOrderPrice > 120000) {
-      return '샴페인 1개';
+    if (this.#isGetGiveawayItem(totalOrderPrice)) {
+      return GIVEAWAY;
     }
-    return '없음';
+    return NONE_PROMOTION;
   }
 
   isGetThisPromotion(type, visitDate, orderLog, totalOrderPrice) {
     if (!this.isApplyPromotion) return false;
-    if (type === '크리스마스 디데이 할인') return this.#christmas(visitDate);
-    if (type === '평일 할인') return this.#weekday(visitDate, orderLog);
-    if (type === '주말 할인') return this.#weekend(visitDate, orderLog);
-    if (type === '특별 할인') return this.#special(visitDate, orderLog);
-    if (type === '증정 이벤트') return this.giveaway(totalOrderPrice);
+    if (type === CATEGORY.CHRISTMAS) return this.#christmas(visitDate);
+    if (type === CATEGORY.WEEKDAY) return this.#weekday(visitDate, orderLog);
+    if (type === CATEGORY.WEEKEND) return this.#weekend(visitDate, orderLog);
+    if (type === CATEGORY.SPECIAL) return this.#special(visitDate, orderLog);
+    if (type === CATEGORY.GIFT_EVENT) return this.giveaway(totalOrderPrice);
+  }
+
+  #isApplyPromotion(totalOrderPrice) {
+    totalOrderPrice > MIN_PRICE_APPLIED_PROMOTION;
+  }
+
+  #isGetGiveawayItem(totalOrderPrice) {
+    totalOrderPrice > MIN_PRICE_APPLIED_GIVEAWAY;
   }
 
   #christmas(visitDate) {
+    // ? 이렇게 식을 적어놓는것에 대해...
     return visitDate <= 25 ? 1000 + (visitDate - 1) * 100 : false;
   }
 
@@ -67,14 +85,16 @@ export default class Promotion {
   }
 
   #special(visitDate) {
-    if ([3, 10, 17, 24, 25, 31].includes(visitDate)) {
+    if (SPECIAL_DAYS.includes(visitDate)) {
       return 1000;
     }
     return false;
   }
 
   giveaway(totalOrderPrice) {
-    return this.getGiveawayItems(totalOrderPrice) === '없음' ? false : 25000;
+    return this.getGiveawayItems(totalOrderPrice) === NONE_PROMOTION
+      ? false
+      : GIVEAWAY_PRICE;
   }
 }
 
