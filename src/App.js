@@ -2,4 +2,7 @@ class App {
   play() {}
 }
 
-module.exports = App;
+const app = new App();
+app.play();
+
+export default App;
