@@ -10,4 +10,6 @@ const BridgeMaker = {
   makeBridge(size, generateRandomNumber) {},
 };
 
+// ? 이 파일만 파일 경로를 변경할 수 없었던 이유 ??
+// 근데 그냥 이동해버리긴했다..
 export default BridgeMaker;
