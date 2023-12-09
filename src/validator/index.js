@@ -1,7 +1,9 @@
-import Size from './Size.js';
+import validateSize from './validateSize.js';
+import validateMoving from './validateMoving.js';
 
-export { Size };
+export { validateSize, validateMoving };
 
 export const Validator = {
-  Size,
+  validateSize,
+  validateMoving,
 };
