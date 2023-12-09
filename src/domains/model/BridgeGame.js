@@ -41,10 +41,13 @@ class BridgeGame {
   move(selectedMoving) {
     if (this.isMovable(selectedMoving)) {
       this.#updateStatus(selectedMoving);
-      this.#round += 1;
     } else {
       this.#updateX(selectedMoving);
     }
+  }
+
+  roundFinish() {
+    this.#round += 1;
   }
 
   // 다른방법 잇는지 확인

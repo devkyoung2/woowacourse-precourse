@@ -8,8 +8,6 @@ import BridgeGame from '../domains/model/BridgeGame.js';
 class BridgeGameController {
   #bridgeGame;
 
-  #bridge;
-
   async run() {
     OutputView.printWelcomeMessage();
     await this.#gameInit();
@@ -24,18 +22,13 @@ class BridgeGameController {
     this.#bridgeGame = new BridgeGame(bridge);
   }
 
-  // eslint-disable-next-line max-lines-per-function
   async #gameStart(bridgeGame) {
-    while (true) {
-      if (bridgeGame.isFinish()) return;
+    while (!bridgeGame.isFinish()) {
       const seletedMoving = await this.#readMoving();
-      if (!bridgeGame.isMovable(seletedMoving)) {
-        bridgeGame.move(seletedMoving);
-        OutputView.printMap(bridgeGame.getStatus());
-        return;
-      }
       bridgeGame.move(seletedMoving);
       OutputView.printMap(bridgeGame.getStatus());
+      if (!bridgeGame.isMovable(seletedMoving)) return;
+      bridgeGame.roundFinish();
     }
   }
 
