@@ -1,9 +1,9 @@
-import InputView from '../views/InputView.js';
-import OutputView from '../views/OutputView.js';
+import BridgeGame from '../domains/model/BridgeGame.js';
 import BridgeMaker from '../domains/BridgeMaker.js';
 import BridgeRandomNumberGenerator from '../domains/BridgeRandomNumberGenerator.js';
+import InputView from '../views/InputView.js';
+import OutputView from '../views/OutputView.js';
 import { Validator } from '../validator/index.js';
-import BridgeGame from '../domains/model/BridgeGame.js';
 
 class BridgeGameController {
   #bridgeGame;

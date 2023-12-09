@@ -69,11 +69,6 @@ class BridgeGame {
     });
   }
 
-  getStatus() {
-    const formattedStatus = Object.values(this.#status).map((stat) => `[ ${stat.join(' | ')} ]`);
-    return formattedStatus;
-  }
-
   /**
    * 사용자가 게임을 다시 시도할 때 사용하는 메서드
    * <p>
@@ -81,10 +76,13 @@ class BridgeGame {
    */
   retry() {
     this.#status = { U: [], D: [] };
-
     this.#attempt += 1;
-
     this.#round = 0;
+  }
+
+  getStatus() {
+    const formattedStatus = Object.values(this.#status).map((stat) => `[ ${stat.join(' | ')} ]`);
+    return formattedStatus;
   }
 
   getAttempt() {
