@@ -14,17 +14,34 @@ class BridgeGameController {
     OutputView.printWelcomeMessage();
     await this.#gameInit();
     await this.#gameStart(this.#bridgeGame);
+    this.#gameEnd();
   }
 
+  // ? 사이즈를 필드에 선언했어야했는지
   async #gameInit() {
     const size = await this.#readBridgeSize();
     const bridge = this.#makeBridge(size);
-    this.bridgeGame = new BridgeGame(bridge);
+    this.#bridgeGame = new BridgeGame(bridge);
   }
 
+  // eslint-disable-next-line max-lines-per-function
   async #gameStart(bridgeGame) {
-    await this.#readMoving();
-    bridgeGame.
+    while (true) {
+      if (bridgeGame.isFinish()) return;
+      const seletedMoving = await this.#readMoving();
+      if (!bridgeGame.isMovable(seletedMoving)) {
+        bridgeGame.move(seletedMoving);
+        OutputView.printMap(bridgeGame.getStatus());
+        return;
+      }
+      bridgeGame.move(seletedMoving);
+      OutputView.printMap(bridgeGame.getStatus());
+    }
+  }
+
+  #gameEnd() {
+    // 결과 출력
+    // 몇번 시행했느지 출력
   }
 
   async #readBridgeSize() {
