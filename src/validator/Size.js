@@ -3,6 +3,7 @@
 // ? 이렇게 까지 함수를 분리해야 하는가 ?
 // -> 근데 문제에 함수는 10줄까지 작성하라는 조건이 있어서 할수밖에 없었다
 
+// ? 파일이름 그냥 Size로 해도 될까..?
 function checkIsNaN(size) {
   if (Number.isNaN(size)) {
     throw new Error('숫자 아님');
@@ -22,7 +23,6 @@ function checkIsInRange(size) {
 }
 
 function validateSize(size) {
-  console.log('ㅇㅇ');
   checkIsNaN(size);
   const sizeNumber = Number(size);
   checkIsInteger(sizeNumber);
