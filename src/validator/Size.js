@@ -22,6 +22,7 @@ function checkIsInRange(size) {
 }
 
 function validateSize(size) {
+  console.log('ㅇㅇ');
   checkIsNaN(size);
   const sizeNumber = Number(size);
   checkIsInteger(sizeNumber);
