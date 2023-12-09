@@ -9,7 +9,7 @@ class BridgeGame {
 
   #status = { U: [], D: [] };
 
-  #attempt = 0;
+  #attempt = 1;
 
   #round = 0;
 
@@ -50,7 +50,7 @@ class BridgeGame {
     this.#round += 1;
   }
 
-  // 다른방법 잇는지 확인
+  // ? 다른방법 잇는지 확인
   #updateStatus(selectedMoving) {
     if (selectedMoving === 'U') {
       this.#status.U.push('O');
@@ -80,11 +80,20 @@ class BridgeGame {
    * 재시작을 위해 필요한 메서드의 반환 값(return value), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
    */
   retry() {
-    console.log('재시작');
+    this.#status = { U: [], D: [] };
+
+    this.#attempt += 1;
+
+    this.#round = 0;
   }
 
   getAttempt() {
     return this.#attempt;
+  }
+
+  getResult() {
+    const isVictory = this.isFinish();
+    return isVictory ? '승리' : '실패';
   }
 }
 

@@ -12,7 +12,7 @@ class BridgeGameController {
     OutputView.printWelcomeMessage();
     await this.#gameInit();
     await this.#gameStart(this.#bridgeGame);
-    this.#gameEnd();
+    this.#gameEnd(this.#bridgeGame);
   }
 
   // ? 사이즈를 필드에 선언했어야했는지
@@ -22,19 +22,47 @@ class BridgeGameController {
     this.#bridgeGame = new BridgeGame(bridge);
   }
 
+  // ? 함수를 더 분리할 수 잇는지
+  // eslint-disable-next-line max-lines-per-function
   async #gameStart(bridgeGame) {
     while (!bridgeGame.isFinish()) {
       const seletedMoving = await this.#readMoving();
       bridgeGame.move(seletedMoving);
       OutputView.printMap(bridgeGame.getStatus());
-      if (!bridgeGame.isMovable(seletedMoving)) return;
+      if (!bridgeGame.isMovable(seletedMoving)) {
+        await this.#gameRetry(bridgeGame);
+
+        return;
+      }
       bridgeGame.roundFinish();
     }
   }
 
-  #gameEnd() {
-    // 결과 출력
-    // 몇번 시행했느지 출력
+  async #gameRetry(bridgeGame) {
+    const retry = await this.#readGameCommand();
+    if (retry === 'R') {
+      bridgeGame.retry();
+      await this.#gameStart(bridgeGame);
+    }
+  }
+
+  #gameEnd(bridgeGame) {
+    const status = bridgeGame.getStatus();
+    const result = bridgeGame.getResult();
+    const attempt = bridgeGame.getAttempt();
+
+    OutputView.printResult(status, result, attempt);
+  }
+
+  async #readGameCommand() {
+    try {
+      const retry = await InputView.readGameCommand();
+      Validator.validateRetry(retry);
+      return retry;
+    } catch ({ message }) {
+      OutputView.printError(message);
+      return this.#readGameCommand();
+    }
   }
 
   async #readBridgeSize() {
