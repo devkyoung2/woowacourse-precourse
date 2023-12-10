@@ -15,22 +15,14 @@ class BridgeGame {
 
   constructor(bridge) {
     this.#bridge = bridge;
-    console.log(this.#bridge);
   }
 
   isFinish() {
-    if (this.#bridge.length === this.#round) {
-      return true;
-    }
-
-    return false;
+    return this.#bridge.length === this.#round;
   }
 
   isMovable(seletedMoving) {
-    if (this.#bridge[this.#round] === seletedMoving) {
-      return true;
-    }
-    return false;
+    return this.#bridge[this.#round] === seletedMoving;
   }
 
   /**
@@ -39,11 +31,8 @@ class BridgeGame {
    * 이동을 위해 필요한 메서드의 반환 값(return value), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
    */
   move(selectedMoving) {
-    if (this.isMovable(selectedMoving)) {
-      this.#updateStatus(selectedMoving);
-    } else {
-      this.#updateX(selectedMoving);
-    }
+    if (this.isMovable(selectedMoving)) return this.#updateStatus(selectedMoving);
+    if (!this.isMovable(selectedMoving)) return this.#updateX(selectedMoving);
   }
 
   roundFinish() {
@@ -82,6 +71,7 @@ class BridgeGame {
 
   getStatus() {
     const formattedStatus = Object.values(this.#status).map((stat) => `[ ${stat.join(' | ')} ]`);
+
     return formattedStatus;
   }
 
@@ -91,6 +81,7 @@ class BridgeGame {
 
   getResult() {
     const isVictory = this.isFinish();
+
     return isVictory ? '승리' : '실패';
   }
 }
