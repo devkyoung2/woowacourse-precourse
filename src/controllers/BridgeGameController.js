@@ -11,7 +11,7 @@ class BridgeGameController {
   async run() {
     OutputView.printWelcomeMessage();
     await this.#gameInit();
-    await this.#gameStart(this.#bridgeGame);
+    await this.#gameLoop(this.#bridgeGame);
     this.#gameEnd(this.#bridgeGame);
   }
 
@@ -23,17 +23,20 @@ class BridgeGameController {
   }
 
   // ? 함수를 더 분리할 수 잇는지
+
   // eslint-disable-next-line max-lines-per-function
-  async #gameStart(bridgeGame) {
+  async #gameLoop(bridgeGame) {
     while (!bridgeGame.isFinish()) {
       const seletedMoving = await this.#readMoving();
+
       bridgeGame.move(seletedMoving);
       OutputView.printMap(bridgeGame.getStatus());
+
       if (!bridgeGame.isMovable(seletedMoving)) {
         await this.#gameRetry(bridgeGame);
-
         return;
       }
+
       bridgeGame.roundFinish();
     }
   }
@@ -42,7 +45,7 @@ class BridgeGameController {
     const retry = await this.#readGameCommand();
     if (retry === 'R') {
       bridgeGame.retry();
-      await this.#gameStart(bridgeGame);
+      await this.#gameLoop(bridgeGame);
     }
   }
 
