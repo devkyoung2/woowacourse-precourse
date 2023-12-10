@@ -3,9 +3,12 @@ import BridgeGameController from './controllers/BridgeGameController.js';
 class App {
   #bridgeGameController;
 
-  // Todo : 의존성 주입 이게 맞는지 확인하기..
-  play(bridgeGameController = new BridgeGameController()) {
+  constructor(bridgeGameController = new BridgeGameController()) {
     this.#bridgeGameController = bridgeGameController;
+  }
+
+  // Done : 의존성 주입 이게 맞는지 확인하기..
+  play() {
     this.#bridgeGameController.run();
   }
 }
